@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Антон Кузьмицкий](https://up.htmlacademy.ru/javascript/16/user/777913).
-* Наставник: `Неизвестно`.
+* Наставник: Артем Черкасов.
 
 ---
 
