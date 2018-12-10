@@ -1,8 +1,9 @@
 console.log(document.querySelector('#picture'));
 console.log(document.querySelector('.pictures'));
+console.log(document.querySelector('.big-picture'));
 
-// var bigPicture = document.querySelector('.big-picture');
-// bigPicture.classList.remove('hidden');
+var bigPictureItem = document.querySelector('.big-picture');
+bigPictureItem.classList.remove('hidden');
 
 var MESSAGES = [
   'Всё отлично!', 
@@ -30,7 +31,7 @@ var getRandomNumber = function (min, max) {
 
 // функция вывода данных описания фотографий
 var IMAGES_COUNT = 25;
-var COMMENTS_COUNT = 5;
+var COMMENTS_COUNT = 125;
 var MIN_VALUE = 1;
 var MAX_VALUE_AVATARS = 7;
 var MAX_VALUE_SRC = 26;
@@ -49,9 +50,27 @@ var comments = [];
     }
     comments.push(comment);
   }
-
   return comments;
 }
+
+var COMMENTS = createComment();
+
+// функция подставления комментариев в выбранную фотографию
+var commentsList = bigPictureItem.querySelector('.social__comments');
+console.log(commentsList);
+
+var setComments = function (arrayComments) {
+  for (var i = 0; i < arrayComments.length; i++) {
+
+  commentsList.querySelector('.social__picture').src = arrayComments[i].avatar;
+  commentsList.querySelector('.social__text').textContent = arrayComments[i].message;
+
+  var commentsItem = commentsList.querySelector('.social__comment').cloneNode(true);
+  commentsList.appendChild(commentsItem);
+  }
+}
+
+setComments(COMMENTS);
 
 // функция создания url, likes, comments
 var createImages = function () {
@@ -82,7 +101,7 @@ console.log(createImages());
 
 var IMAGES = createImages();
 
-// функция подставления данных
+// функция подставления данных в гл.стр
 var templatePicture = document.querySelector('#picture');
 
 var setImages = function (arrayImages) {
@@ -95,6 +114,10 @@ var setImages = function (arrayImages) {
 
   var pictureItem = document.querySelector('.pictures');
   pictureItem.appendChild(templateItem);
+
+  bigPictureItem.querySelector('.big-picture__img').querySelector('img').src = arrayImages[0].url;
+  bigPictureItem.querySelector('.likes-count').textContent = arrayImages[0].likes;
+  bigPictureItem.querySelector('.comments-count').textContent = arrayImages[0].comments;
   }
 }
 
