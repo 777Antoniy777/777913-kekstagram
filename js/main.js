@@ -30,41 +30,72 @@ var getRandomNumber = function (min, max) {
 
 // функция вывода данных описания фотографий
 var IMAGES_COUNT = 25;
+var COMMENTS_COUNT = 5;
 var MIN_VALUE = 1;
 var MAX_VALUE_AVATARS = 7;
 var MAX_VALUE_SRC = 26;
 var MIN_VALUE_LIKES = 15;
 var MAX_VALUE_LIKES = 201;
 
-var createImages = function (array) {
-  var images = [];
-  
-  // for (var i = 0; i < IMAGES_COUNT; i++) {
+// функция создания содержимого comments
+var createComment = function () {
+var comments = [];
+
+  for (var j = 0; j < COMMENTS_COUNT; j++) {
     var comment = {
       avatar: "img/avatar-" + getRandomNumber(MIN_VALUE, MAX_VALUE_AVATARS) + ".svg",
       message: MESSAGES[getRandomValue(MESSAGES)],
       name: NAMES[getRandomValue(NAMES)]
     }
+    comments.push(comment);
+  }
 
+  return comments;
+}
+
+// функция создания url, likes, comments
+var createImages = function () {
+  var images = [];
+  // var comments = [];
+  
+  // for (var j = 0; j < COMMENTS_COUNT; j++) {
+  //   var comment = {
+  //     avatar: "img/avatar-" + getRandomNumber(MIN_VALUE, MAX_VALUE_AVATARS) + ".svg",
+  //     message: MESSAGES[getRandomValue(MESSAGES)],
+  //     name: NAMES[getRandomValue(NAMES)]
+  //   }
+  //   comments.push(comment);
+  // }
+
+  for (var i = 0; i < IMAGES_COUNT; i++) {
     var newImage = {
       url: 'photos/' + getRandomNumber(MIN_VALUE, MAX_VALUE_SRC) + '.jpg',
       likes: getRandomNumber(MIN_VALUE_LIKES, MAX_VALUE_LIKES),
-      comments: comment
+      comments: COMMENTS_COUNT
     }
     images.push(newImage);
-  // }
+  }
   return images;
 }
 
-// console.log(createImages());
+console.log(createImages());
 
-// функция подставления данных в template
-var setImages = function (array) {
-var templatePicture = document.querySelector('#picture').content.querySelector('a').cloneNode(true);
-var templateImg = templatePicture.querySelector('picture__img').style.src = createImages(images[i]);;
-console.log(templatePicture);
+var IMAGES = createImages();
 
-// templateImg.style.src = createImages(images[i]);
+// функция подставления данных
+var templatePicture = document.querySelector('#picture');
+
+var setImages = function (arrayImages) {
+  for (var i = 0; i < arrayImages.length; i++) {
+  var templateItem = templatePicture.content.querySelector('.picture').cloneNode(true);
+
+  templateItem.querySelector('.picture__img').src = arrayImages[i].url;
+  templateItem.querySelector('.picture__likes').textContent = arrayImages[i].likes;
+  templateItem.querySelector('.picture__comments').textContent = arrayImages[i].comments;
+
+  var pictureItem = document.querySelector('.pictures');
+  pictureItem.appendChild(templateItem);
+  }
 }
 
-setImages();
+setImages(IMAGES);
