@@ -31,7 +31,7 @@ var getRandomNumber = function (min, max) {
 
 // функция вывода данных описания фотографий
 var IMAGES_COUNT = 25;
-var COMMENTS_COUNT = 125;
+var COMMENTS_COUNT = 4;
 var MIN_VALUE = 1;
 var MAX_VALUE_AVATARS = 7;
 var MAX_VALUE_SRC = 26;
@@ -57,16 +57,21 @@ var COMMENTS = createComment();
 
 // функция подставления комментариев в выбранную фотографию
 var commentsList = bigPictureItem.querySelector('.social__comments');
+var BEGIN_COMMENTS_COUNT = commentsList.children.length;
 console.log(commentsList);
 
 var setComments = function (arrayComments) {
   for (var i = 0; i < arrayComments.length; i++) {
-
   commentsList.querySelector('.social__picture').src = arrayComments[i].avatar;
   commentsList.querySelector('.social__text').textContent = arrayComments[i].message;
 
   var commentsItem = commentsList.querySelector('.social__comment').cloneNode(true);
-  commentsList.appendChild(commentsItem);
+  commentsList.appendChild(commentsItem); 
+  }
+
+  for (var i = 0; i < BEGIN_COMMENTS_COUNT; i++) {
+    var beginComments = commentsList.querySelector('.social__comment');
+    commentsList.removeChild(beginComments); 
   }
 }
 
@@ -75,17 +80,7 @@ setComments(COMMENTS);
 // функция создания url, likes, comments
 var createImages = function () {
   var images = [];
-  // var comments = [];
   
-  // for (var j = 0; j < COMMENTS_COUNT; j++) {
-  //   var comment = {
-  //     avatar: "img/avatar-" + getRandomNumber(MIN_VALUE, MAX_VALUE_AVATARS) + ".svg",
-  //     message: MESSAGES[getRandomValue(MESSAGES)],
-  //     name: NAMES[getRandomValue(NAMES)]
-  //   }
-  //   comments.push(comment);
-  // }
-
   for (var i = 0; i < IMAGES_COUNT; i++) {
     var newImage = {
       url: 'photos/' + getRandomNumber(MIN_VALUE, MAX_VALUE_SRC) + '.jpg',
@@ -122,3 +117,11 @@ var setImages = function (arrayImages) {
 }
 
 setImages(IMAGES);
+
+// функция добавления класса hidden к тем объектам, которые это заслужили
+var addHiddenClass = function () {
+  document.querySelector('.social__comment-count').classList.add('visually-hidden');
+  document.querySelector('.comments-loader').classList.add('visually-hidden');
+}
+
+addHiddenClass();
