@@ -18,20 +18,18 @@ var DESCRIPTION = [
   'Мое первое фото. Не судите строго',
   'За оскорбления БАН!!!'
 ];
-var NAMES = ['Артема', 'Саши', 'Маши', 'Дмитрия'];
+var NAMES = ['Артема', 'Саши', 'Маши', 'Дмитрия', 'Владимира', 'Арсения'];
 
 // функция получения рандомного значения из массива
 var getRandomValue = function (array) {
-  for (var i = 0; i <= array.length; i++) {
-    var randomValue = Math.floor(Math.random() * i);
-  }
-  return randomValue;
+  var indexValue = Math.floor(Math.random() * (array.length - 1));
+  return array[indexValue];
 };
 
 // функция получения рандомного значения из чисел
 var getRandomNumber = function (min, max) {
-  var randomNumber = Math.floor(Math.random() * (max - min) + min);
-  return randomNumber;
+  var indexNumber = Math.floor(Math.random() * (max - min) + min);
+  return indexNumber;
 };
 
 // функция вывода данных описания фотографий
@@ -50,9 +48,9 @@ var createComment = function () {
   for (var j = 0; j < COMMENTS_COUNT; j++) {
     var comment = {
       avatar: 'img/avatar-' + getRandomNumber(MIN_VALUE, MAX_VALUE_AVATARS) + '.svg',
-      message: MESSAGES[getRandomValue(MESSAGES)],
-      name: NAMES[getRandomValue(NAMES)],
-      description: DESCRIPTION[getRandomValue(DESCRIPTION)]
+      message: getRandomValue(MESSAGES),
+      name: getRandomValue(NAMES),
+      description: getRandomValue(DESCRIPTION)
     };
     comments.push(comment);
   }
