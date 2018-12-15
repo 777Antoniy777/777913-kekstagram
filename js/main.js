@@ -1,6 +1,6 @@
 'use strict';
 var bigPictureItem = document.querySelector('.big-picture');
-bigPictureItem.classList.remove('hidden');
+// bigPictureItem.classList.remove('hidden');
 
 var MESSAGES = [
   'Всё отлично!',
@@ -34,7 +34,7 @@ var getRandomNumber = function (min, max) {
 
 // функция вывода данных описания фотографий
 var IMAGES_COUNT = 25;
-var COMMENTS_COUNT = 4;
+var COMMENTS_COUNT = 10;
 var MIN_VALUE = 1;
 var MAX_VALUE_AVATARS = 7;
 var MAX_VALUE_SRC = 26;
@@ -114,11 +114,12 @@ var setImages = function (arrayImages) {
     templateItem.querySelector('.picture__img').src = arrayImages[i].url;
     templateItem.querySelector('.picture__likes').textContent = arrayImages[i].likes;
     templateItem.querySelector('.picture__comments').textContent = arrayImages[i].comments;
+    templateItem.classList.add('picture-' + [i]);
 
     var pictureItem = document.querySelector('.pictures');
     pictureItem.appendChild(templateItem);
 
-    bigPictureItem.querySelector('.big-picture__img').querySelector('img').src = arrayImages[0].url;
+    bigPictureItem.querySelector('.big-picture__img img').src = arrayImages[0].url;
     bigPictureItem.querySelector('.likes-count').textContent = arrayImages[0].likes;
     bigPictureItem.querySelector('.comments-count').textContent = arrayImages[0].comments;
   }
@@ -133,3 +134,106 @@ var addHiddenClass = function () {
 };
 
 addHiddenClass();
+
+// открытие и закрытие большого фото при нажатии на любое фото в галерее
+
+var CODE_BUTTON_ESC = 27;
+var CODE_BUTTON_ENTER = 13;
+
+var pictureGallery = document.querySelector('.pictures .picture-0');
+var bigPictureClose = bigPictureItem.querySelector('.big-picture__cancel');
+bigPictureClose.tabIndex = 0;
+var commentInput = bigPictureItem.querySelector('.social__footer-text');
+
+var pictureKeydownESCHandler = function (evt) {
+  if (evt.keyCode === CODE_BUTTON_ESC) {
+    evt.preventDefault()
+    pictureClose();
+  } 
+};
+
+var pictureOpen = function () {
+  bigPictureItem.classList.remove('hidden');
+  commentInput.focus();
+  document.addEventListener('keydown', pictureKeydownESCHandler);
+};
+
+var pictureClose = function () {
+  bigPictureItem.classList.add('hidden');
+  document.removeEventListener('keydown', pictureKeydownESCHandler);
+};
+
+// открытие полноэкранной картинки с помощью мыши и закрытие с помощью ESC
+pictureGallery.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  pictureOpen();
+});
+
+// открытие полноэкранной картинки с помощью ENTER и закрытие с помощью ESC
+pictureGallery.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === CODE_BUTTON_ENTER) {
+    evt.preventDefault();
+    pictureOpen();
+  }
+});
+
+// закрытие полноэкранной картинки с помощью мыши
+bigPictureClose.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  pictureClose();
+});
+
+// закрытие полноэкранной картинки с помощью мыши
+bigPictureClose.addEventListener('keydown', function () {
+  if (evt.keyCode === CODE_BUTTON_ENTER) {
+    evt.preventDefault();
+    pictureClose();
+  }
+});
+
+// редактирование фильтра изображений
+
+var uploadForm = document.querySelector('.img-upload__form');
+var uploadFile = uploadForm.querySelector('#upload-file');
+var uploadSetup = uploadForm.querySelector('.img-upload__overlay');
+var hashtagInput = uploadForm.querySelector('.text__hashtags');
+var setupClose = uploadForm.querySelector('.img-upload__cancel');
+console.log(uploadFile);
+console.log(uploadSetup);
+
+var fileKeydownESCHandler = function (evt) {
+  if (evt.keyCode === CODE_BUTTON_ESC) {
+    evt.preventDefault()
+    fileClose();
+  } 
+};
+
+var fileOpen = function () {
+  uploadSetup.classList.remove('hidden');
+  hashtagInput.focus();
+  document.addEventListener('keydown', fileKeydownESCHandler);
+};
+
+var fileClose = function () {
+  uploadSetup.classList.add('hidden');
+  document.removeEventListener('keydown', fileKeydownESCHandler);
+};
+
+// открытие окна с фильтрами
+
+uploadFile.addEventListener('change', function () {
+  fileOpen();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === CODE_BUTTON_ENTER) {
+    fileClose();
+  }
+});
+
+setupClose.addEventListener('click', function (evt) {
+  fileClose();
+});
+
+
+
