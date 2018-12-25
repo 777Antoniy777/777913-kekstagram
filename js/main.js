@@ -259,31 +259,101 @@ sliderPin.addEventListener('mouseup', function () {
 });
 
 // создание фильтров
-var cepia = uploadForm.querySelector('.effects__preview--sepia');
-var chrome = uploadForm.querySelector('.effects__preview--chrome');
+var original = uploadForm.querySelector('label[for=effect-none]');
+var chrome = uploadForm.querySelector('label[for=effect-chrome]');
+var sepia = uploadForm.querySelector('label[for=effect-sepia]');
+var marvin = uploadForm.querySelector('label[for=effect-marvin]');
+var phobos = uploadForm.querySelector('label[for=effect-phobos]');
+var heat = uploadForm.querySelector('label[for=effect-heat]');
 var prewiev = uploadForm.querySelector('.img-upload__preview img');
 
 var filterArray = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
 var filterlist = uploadForm.querySelector('.img-upload__effects .effects__list');
-console.log(filterlist.children);
+var filterItem = filterlist.querySelector('.effects__item');
+var labelArray = [original, chrome, sepia, marvin, phobos, heat];
 
-var testFunction = function () {
-  for (var i = 0; i < filterArray.length; i++) {
-    
-  }
-};
-
-for (var i = 0; i < filterlist.children.length; i++) {
-  prewiev.style.filter = filterArray[i];
-}
-
-// cepia.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[2];
+// original.addEventListener('click', function () {
+//   prewiev.style.filter = filterArray[0];
 // });
 
 // chrome.addEventListener('click', function () {
 //   prewiev.style.filter = filterArray[1];
 // });
+
+// sepia.addEventListener('click', function () {
+//   prewiev.style.filter = filterArray[2];
+// });
+
+// marvin.addEventListener('click', function () {
+//   prewiev.style.filter = filterArray[3];
+// });
+
+// phobos.addEventListener('click', function () {
+//   prewiev.style.filter = filterArray[4];
+// });
+
+// heat.addEventListener('click', function () {
+//   prewiev.style.filter = filterArray[5];
+// });
+
+var testtest = function () {
+  for (var i = 0; i < labelArray.length; i++) {
+  // labelArray[0].addEventListener('click', function () {
+  //   prewiev.style.filter = filterArray[0];
+  // })
+  // labelArray[1].addEventListener('click', function () {
+  //   prewiev.style.filter = filterArray[1];
+  // })
+  // labelArray[2].addEventListener('click', function () {
+  //   prewiev.style.filter = filterArray[2];
+  // })
+  // labelArray[3].addEventListener('click', function () {
+  //   prewiev.style.filter = filterArray[3];
+  // })
+  // labelArray[4].addEventListener('click', function () {
+  //   prewiev.style.filter = filterArray[4];
+  // })
+  // labelArray[5].addEventListener('click', function () {
+  //   prewiev.style.filter = filterArray[5];
+  // })
+
+  labelArray[i].addEventListener('click', function (evt) {
+    testFunctionOne(filterArray);
+    evt.stopPropagation();
+  })
+};
+}
+
+// var testFunctionTwo = function (indexFilter, filters) {
+//   filterItem.addEventListener('click', function () {
+//       testFunctionOne(filterArray);
+//   });
+
+var i = 0;
+var testFunctionOne = function (filters) {
+    if (i === filters.length - 1) {
+      i = 0;
+    } else {
+      i++
+    }
+  prewiev.style.filter = filters[i];
+}
+
+
+// var testFunctionThree = function () {
+//   var indexList = 0;
+//   for (var j = 0; j < filterlist.children.length; j++) {
+//     if (j === filterlist.children.length) {
+//       indexList = 0;
+//     } else {
+//       indexList++
+//     }
+//   }
+// }
+
+// testFunctionTwo();
+testtest();
+
 
 
 
