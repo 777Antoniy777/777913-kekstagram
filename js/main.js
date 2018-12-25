@@ -254,9 +254,15 @@ console.log(uploadSetup);
 uploadSetup.classList.remove('hidden');
 
 // отпускание пина слайдера
-sliderPin.addEventListener('mouseup', function () {
-  
-});
+var pinLine = uploadForm.querySelector('.effect-level__line');
+var pinLineFill = uploadForm.querySelector('.effect-level__depth');
+var pin = uploadForm.querySelector('.effect-level__pin');
+var MARVIN_VALUE = 100;
+var PHOBOS_HEAT_VALUE = 3;
+
+var percentGraySepia = pin.offsetLeft / pinLine.offsetWidth;
+var percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth; 
+var percentPhobosHeat = pin.offsetLeft * PHOBOS_HEAT_VALUE / pinLine.offsetWidth;
 
 // создание фильтров
 var original = uploadForm.querySelector('label[for=effect-none]');
@@ -265,62 +271,52 @@ var sepia = uploadForm.querySelector('label[for=effect-sepia]');
 var marvin = uploadForm.querySelector('label[for=effect-marvin]');
 var phobos = uploadForm.querySelector('label[for=effect-phobos]');
 var heat = uploadForm.querySelector('label[for=effect-heat]');
+
 var prewiev = uploadForm.querySelector('.img-upload__preview img');
 
+// var filterArray = ['none', 'grayscale(0)', 'sepia(0)', 'invert(0%)', 'blur(1px)', 'brightness(1)'];
 var filterArray = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
 var filterlist = uploadForm.querySelector('.img-upload__effects .effects__list');
 var filterItem = filterlist.querySelector('.effects__item');
 var labelArray = [original, chrome, sepia, marvin, phobos, heat];
 
-// original.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[0];
-// });
-
-// chrome.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[1];
-// });
-
-// sepia.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[2];
-// });
-
-// marvin.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[3];
-// });
-
-// phobos.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[4];
-// });
-
-// heat.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[5];
-// });
-
 var testtest = function () {
   for (var i = 0; i < labelArray.length; i++) {
-  // labelArray[0].addEventListener('click', function () {
-  //   prewiev.style.filter = filterArray[0];
-  // })
-  // labelArray[1].addEventListener('click', function () {
-  //   prewiev.style.filter = filterArray[1];
-  // })
-  // labelArray[2].addEventListener('click', function () {
-  //   prewiev.style.filter = filterArray[2];
-  // })
-  // labelArray[3].addEventListener('click', function () {
-  //   prewiev.style.filter = filterArray[3];
-  // })
-  // labelArray[4].addEventListener('click', function () {
-  //   prewiev.style.filter = filterArray[4];
-  // })
-  // labelArray[5].addEventListener('click', function () {
-  //   prewiev.style.filter = filterArray[5];
-  // })
-
-  labelArray[i].addEventListener('click', function (evt) {
-    testFunctionOne(filterArray);
-    evt.stopPropagation();
+  labelArray[0].addEventListener('click', function () {
+    prewiev.style.filter = filterArray[0];
   })
+  labelArray[1].addEventListener('click', function () {
+    prewiev.style.filter = filterArray[1];
+    sliderPin.addEventListener('mouseup', function () {
+      prewiev.style.filter = 'grayscale(' + percentGraySepia + ')';
+      console.log(percentGraySepia);
+    });
+  })
+  labelArray[2].addEventListener('click', function () {
+    prewiev.style.filter = filterArray[2];
+    sliderPin.addEventListener('mouseup', function () {
+      prewiev.style.filter = 'sepia(' + percentGraySepia + ')';
+    });
+  })
+  labelArray[3].addEventListener('click', function () {
+    prewiev.style.filter = filterArray[3];
+    sliderPin.addEventListener('mouseup', function () {
+      prewiev.style.filter = 'invert(' + percentMarvin + '%' + ')';  
+    });
+  })
+  labelArray[4].addEventListener('click', function () {
+    prewiev.style.filter = filterArray[4];
+    sliderPin.addEventListener('mouseup', function () {
+      prewiev.style.filter = 'blur(' + percentPhobosHeat + 'px' + ')';
+    });
+  })
+  labelArray[5].addEventListener('click', function () {
+    prewiev.style.filter = filterArray[5];
+    sliderPin.addEventListener('mouseup', function () {
+      prewiev.style.filter = 'brightness(' + percentPhobosHeat + ')';
+    });
+  })
+
 };
 }
 
@@ -329,15 +325,15 @@ var testtest = function () {
 //       testFunctionOne(filterArray);
 //   });
 
-var i = 0;
-var testFunctionOne = function (filters) {
-    if (i === filters.length - 1) {
-      i = 0;
-    } else {
-      i++
-    }
-  prewiev.style.filter = filters[i];
-}
+// var i = 0;
+// var testFunctionOne = function (filters) {
+//     if (i === filters.length - 1) {
+//       i = 0;
+//     } else {
+//       i++
+//     }
+//   prewiev.style.filter = filters[i];
+// }
 
 
 // var testFunctionThree = function () {
@@ -379,4 +375,26 @@ testtest();
 //   }, i * 1000)
 // };
 
+// original.addEventListener('click', function () {
+//   prewiev.style.filter = filterArray[0];
+// });
 
+// chrome.addEventListener('click', function () {
+//   prewiev.style.filter = filterArray[1];
+// });
+
+// sepia.addEventListener('click', function () {
+//   prewiev.style.filter = filterArray[2];
+// });
+
+// marvin.addEventListener('click', function () {
+//   prewiev.style.filter = filterArray[3];
+// });
+
+// phobos.addEventListener('click', function () {
+//   prewiev.style.filter = filterArray[4];
+// });
+
+// heat.addEventListener('click', function () {
+//   prewiev.style.filter = filterArray[5];
+// });
