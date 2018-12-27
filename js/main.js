@@ -42,13 +42,11 @@ var MAX_VALUE_LIKES = 201;
 
 var MIN_COMMENTS_COUNT = 5;
 var MAX_COMMENTS_COUNT = 25;
-// var COMMENTS_COUNT = 10;
 
 // функция создания содержимого comments
 var createComment = function () {
   var comments = [];
-  
-  // for (var j = 0; j <= IMAGES_COUNT; j++) {
+
   for (var i = 0; i < getRandomNumber(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT); i++) {
     var comment = {
       avatar: 'img/avatar-' + getRandomNumber(MIN_VALUE, MAX_VALUE_AVATARS) + '.svg',
@@ -58,7 +56,6 @@ var createComment = function () {
     };
     comments.push(comment);
   }
-// }
   return comments;
 };
 
@@ -83,6 +80,8 @@ var setComments = function (arrayComments) {
 
     var commentsItem = commentsList.querySelector('.social__comment').cloneNode(true);
     commentsList.appendChild(commentsItem);
+
+    commentsList.removeChild();
   }
 
   for (i = 0; i < BEGIN_COMMENTS_COUNT; i++) {
@@ -90,8 +89,6 @@ var setComments = function (arrayComments) {
     commentsList.removeChild(beginComments);
   }
 };
-
-setComments(COMMENTS);
 
 // функция создания url, likes, comments
 var createImages = function () {
@@ -102,7 +99,7 @@ var createImages = function () {
     var newImage = {
       url: 'photos/' + imageNumber + '.jpg',
       likes: getRandomNumber(MIN_VALUE_LIKES, MAX_VALUE_LIKES),
-      comments: COMMENTS.length
+      comments: createComment()
     };
     images.push(newImage);
   }
@@ -120,7 +117,7 @@ var setImages = function (arrayImages) {
 
     templateItem.querySelector('.picture__img').src = arrayImages[i].url;
     templateItem.querySelector('.picture__likes').textContent = arrayImages[i].likes;
-    templateItem.querySelector('.picture__comments').textContent = arrayImages[i].comments;
+    templateItem.querySelector('.picture__comments').textContent = arrayImages[i].comments.length;
 
     callPictureClick(templateItem, arrayImages[i]);
     callPictureEnter(templateItem, arrayImages[i]);
@@ -177,7 +174,8 @@ var pictureOpen = function (image) {
   bigPictureItem.classList.remove('hidden');
   bigPictureItem.querySelector('.big-picture__img img').src = image.url;
   bigPictureItem.querySelector('.likes-count').textContent = image.likes;
-  bigPictureItem.querySelector('.comments-count').textContent = image.comments;
+  bigPictureItem.querySelector('.comments-count').textContent = image.comments.length;
+  setComments(image.comments);
   commentInput.focus();
   document.addEventListener('keydown', pictureKeydownESCHandler);
 };
@@ -205,7 +203,6 @@ bigPictureClose.addEventListener('keydown', function (evt) {
 
 
 
-
 // редактирование фильтра изображений
 var uploadForm = document.querySelector('.img-upload__form');
 var uploadFile = uploadForm.querySelector('#upload-file');
@@ -213,45 +210,44 @@ var uploadSetup = uploadForm.querySelector('.img-upload__overlay');
 var hashtagInput = uploadForm.querySelector('.text__hashtags');
 var setupClose = uploadForm.querySelector('.img-upload__cancel');
 var sliderPin = uploadForm.querySelector('.effect-level__pin');
-console.log(uploadSetup);
 
-// var fileKeydownESCHandler = function (evt) {
-//   if (evt.keyCode === CODE_BUTTON_ESC) {
-//     evt.preventDefault()
-//     fileClose();
-//   } 
-// };
+// закрытие окна с фильтрами при нажатии на ESC
+var fileKeydownESCHandler = function (evt) {
+  if (evt.keyCode === CODE_BUTTON_ESC) {
+    evt.preventDefault()
+    fileClose();
+  } 
+};
 
-// var fileOpen = function () {
-//   uploadSetup.classList.remove('hidden');
-//   hashtagInput.focus();
-//   document.addEventListener('keydown', fileKeydownESCHandler);
-// };
+var fileOpen = function () {
+  uploadSetup.classList.remove('hidden');
+  hashtagInput.focus();
+  setFilterEffects();
 
-// var fileClose = function () {
-//   uploadSetup.classList.add('hidden');
-//   uploadFile.value = '';
-//   document.removeEventListener('keydown', fileKeydownESCHandler);
-// };
+  document.addEventListener('keydown', fileKeydownESCHandler);
+};
 
-// // открытие окна с фильтрами
+var fileClose = function () {
+  uploadSetup.classList.add('hidden');
+  uploadFile.value = '';
+  document.removeEventListener('keydown', fileKeydownESCHandler);
+};
 
-// uploadFile.addEventListener('change', function () {
-//   fileOpen();
-// });
+// открытие окна с фильтрами
+uploadFile.addEventListener('change', function () {
+  fileOpen();
+});
 
-// setupClose.addEventListener('keydown', function (evt) {
-//   if (evt.keyCode === CODE_BUTTON_ENTER) {
-//     fileClose();
-//   }
-// });
+// закрытие окна с фильтрами при нажатии на мышь и ENTER
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === CODE_BUTTON_ENTER) {
+    fileClose();
+  }
+});
 
-// setupClose.addEventListener('click', function () {
-//   fileClose();
-// });
-
-// УДАЛИ ПОТОМ
-uploadSetup.classList.remove('hidden');
+setupClose.addEventListener('click', function () {
+  fileClose();
+});
 
 // отпускание пина слайдера
 var pinLine = uploadForm.querySelector('.effect-level__line');
@@ -260,9 +256,9 @@ var pin = uploadForm.querySelector('.effect-level__pin');
 var MARVIN_VALUE = 100;
 var PHOBOS_HEAT_VALUE = 3;
 
-var percentGraySepia = pin.offsetLeft / pinLine.offsetWidth;
-var percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth; 
-var percentPhobosHeat = pin.offsetLeft * PHOBOS_HEAT_VALUE / pinLine.offsetWidth;
+var percentGraySepia;
+var percentMarvin; 
+var percentPhobosHeat;
 
 // создание фильтров
 var original = uploadForm.querySelector('label[for=effect-none]');
@@ -273,101 +269,49 @@ var phobos = uploadForm.querySelector('label[for=effect-phobos]');
 var heat = uploadForm.querySelector('label[for=effect-heat]');
 
 var prewiev = uploadForm.querySelector('.img-upload__preview img');
-
-// var filterArray = ['none', 'grayscale(0)', 'sepia(0)', 'invert(0%)', 'blur(1px)', 'brightness(1)'];
-var filterArray = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
+var FILTERS = [
+  'none', 
+  'grayscale(0)', 
+  'sepia(0)', 
+  'invert(0%)', 
+  'blur(0px)', 
+  'brightness(0.1)'
+];
+// var FILTERS = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
+var FILTERS_EFFECTS;
+var LABELS = [original, chrome, sepia, marvin, phobos, heat];
 var filterlist = uploadForm.querySelector('.img-upload__effects .effects__list');
 var filterItem = filterlist.querySelector('.effects__item');
-var labelArray = [original, chrome, sepia, marvin, phobos, heat];
 
-var testtest = function () {
-  for (var i = 0; i < labelArray.length; i++) {
-  labelArray[0].addEventListener('click', function () {
-    prewiev.style.filter = filterArray[0];
-  })
-  labelArray[1].addEventListener('click', function () {
-    prewiev.style.filter = filterArray[1];
-    sliderPin.addEventListener('mouseup', function () {
-      prewiev.style.filter = 'grayscale(' + percentGraySepia + ')';
-      console.log(percentGraySepia);
-    });
-  })
-  labelArray[2].addEventListener('click', function () {
-    prewiev.style.filter = filterArray[2];
-    sliderPin.addEventListener('mouseup', function () {
-      prewiev.style.filter = 'sepia(' + percentGraySepia + ')';
-    });
-  })
-  labelArray[3].addEventListener('click', function () {
-    prewiev.style.filter = filterArray[3];
-    sliderPin.addEventListener('mouseup', function () {
-      prewiev.style.filter = 'invert(' + percentMarvin + '%' + ')';  
-    });
-  })
-  labelArray[4].addEventListener('click', function () {
-    prewiev.style.filter = filterArray[4];
-    sliderPin.addEventListener('mouseup', function () {
-      prewiev.style.filter = 'blur(' + percentPhobosHeat + 'px' + ')';
-    });
-  })
-  labelArray[5].addEventListener('click', function () {
-    prewiev.style.filter = filterArray[5];
-    sliderPin.addEventListener('mouseup', function () {
-      prewiev.style.filter = 'brightness(' + percentPhobosHeat + ')';
-    });
-  })
-
-};
+// подстановка массивов и переменных в функцию создания фильтров
+var setFilterEffects = function () {
+  for (var i = 0; i < LABELS.length; i++) {
+    getFilterEffects(LABELS[i], FILTERS[i], i);
+  };
 }
 
-// var testFunctionTwo = function (indexFilter, filters) {
-//   filterItem.addEventListener('click', function () {
-//       testFunctionOne(filterArray);
-//   });
+var getFilterEffects = function (label, filter, i) {
+  label.addEventListener('click', function () {
+    prewiev.style.filter = filter;
+    sliderPin.addEventListener('mouseup', function () {
+      percentGraySepia = pin.offsetLeft / pinLine.offsetWidth;
+      percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth; 
+      percentPhobosHeat = pin.offsetLeft * PHOBOS_HEAT_VALUE / pinLine.offsetWidth;
+      FILTERS_EFFECTS = [
+        'none', 
+        'grayscale(' + percentGraySepia + ')',
+        'sepia(' + percentGraySepia + ')', 
+        'invert(' + percentMarvin + '%' + ')', 
+        'blur(' + percentPhobosHeat + 'px' + ')', 
+        'brightness(' + percentPhobosHeat + ')'
+      ];
 
-// var i = 0;
-// var testFunctionOne = function (filters) {
-//     if (i === filters.length - 1) {
-//       i = 0;
-//     } else {
-//       i++
-//     }
-//   prewiev.style.filter = filters[i];
-// }
+      prewiev.style.filter = FILTERS_EFFECTS[i];
+    });
+  })
+};
 
-
-// var testFunctionThree = function () {
-//   var indexList = 0;
-//   for (var j = 0; j < filterlist.children.length; j++) {
-//     if (j === filterlist.children.length) {
-//       indexList = 0;
-//     } else {
-//       indexList++
-//     }
-//   }
-// }
-
-// testFunctionTwo();
-testtest();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// setFilterEffects();
 
 // for (var i = 0; i <= 5; i++) {
 //   setTimeout (function () {
@@ -375,26 +319,3 @@ testtest();
 //   }, i * 1000)
 // };
 
-// original.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[0];
-// });
-
-// chrome.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[1];
-// });
-
-// sepia.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[2];
-// });
-
-// marvin.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[3];
-// });
-
-// phobos.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[4];
-// });
-
-// heat.addEventListener('click', function () {
-//   prewiev.style.filter = filterArray[5];
-// });
