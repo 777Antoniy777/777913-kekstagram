@@ -81,7 +81,12 @@ var setComments = function (arrayComments) {
     var commentsItem = commentsList.querySelector('.social__comment').cloneNode(true);
     commentsList.appendChild(commentsItem);
 
-    commentsList.removeChild();
+    // var currentComments = commentsList.querySelectorAll('.social__comment');
+    // console.log(currentComments);
+
+    // for (i = 0; i < BEGIN_COMMENTS_COUNT; i++) {
+    //   commentsList.removeChild(commentsItem);
+    // }
   }
 
   for (i = 0; i < BEGIN_COMMENTS_COUNT; i++) {
@@ -89,6 +94,17 @@ var setComments = function (arrayComments) {
     commentsList.removeChild(beginComments);
   }
 };
+
+var removeComments = function () {
+  var currentComments = commentsList.querySelectorAll('.social__comment');
+  // commentsList.removeChild(currentComments);
+  // console.log(currentComments);
+  for (var i = 0; i < currentComments.length; i++) {
+    commentsList.removeChild(currentComments);
+  }
+}
+
+
 
 // функция создания url, likes, comments
 var createImages = function () {
@@ -175,13 +191,18 @@ var pictureOpen = function (image) {
   bigPictureItem.querySelector('.big-picture__img img').src = image.url;
   bigPictureItem.querySelector('.likes-count').textContent = image.likes;
   bigPictureItem.querySelector('.comments-count').textContent = image.comments.length;
+  //
   setComments(image.comments);
+  //
   commentInput.focus();
   document.addEventListener('keydown', pictureKeydownESCHandler);
 };
 
-var pictureClose = function () {
+var pictureClose = function (image) {
   bigPictureItem.classList.add('hidden');
+  //
+  removeComments();
+  //
   document.removeEventListener('keydown', pictureKeydownESCHandler);
 };
 
@@ -249,6 +270,9 @@ setupClose.addEventListener('click', function () {
   fileClose();
 });
 
+// УДАЛИ потом
+// uploadSetup.classList.remove('hidden');
+
 // отпускание пина слайдера
 var pinLine = uploadForm.querySelector('.effect-level__line');
 var pinLineFill = uploadForm.querySelector('.effect-level__depth');
@@ -290,24 +314,63 @@ var setFilterEffects = function () {
   };
 }
 
+// функция движенитя пина слайдера
 var getFilterEffects = function (label, filter, i) {
   label.addEventListener('click', function () {
     prewiev.style.filter = filter;
-    sliderPin.addEventListener('mouseup', function () {
-      percentGraySepia = pin.offsetLeft / pinLine.offsetWidth;
-      percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth; 
-      percentPhobosHeat = pin.offsetLeft * PHOBOS_HEAT_VALUE / pinLine.offsetWidth;
-      FILTERS_EFFECTS = [
-        'none', 
-        'grayscale(' + percentGraySepia + ')',
-        'sepia(' + percentGraySepia + ')', 
-        'invert(' + percentMarvin + '%' + ')', 
-        'blur(' + percentPhobosHeat + 'px' + ')', 
-        'brightness(' + percentPhobosHeat + ')'
-      ];
 
-      prewiev.style.filter = FILTERS_EFFECTS[i];
-    });
+    pin.addEventListener('mousedown', function (evt) {
+      evt.preventDefault();
+
+      var startCoords = {
+        x: pin.offsetLeft
+        // x: evt.clientX
+      }
+    
+      var pinMoveHandler = function (moveEvt) {
+        moveEvt.preventDefault();
+
+        var continueCoords = {
+          x: startCoords.x - moveEvt.clientX
+        }
+
+        startCoords = {
+          x: moveEvt.clientX
+        }
+        // pin.style.position = 'absolute';
+        var leftPinLine = getComputedStyle(pinLine).getPropertyValue('left');
+        var testCoords = (pin.offsetLeft - continueCoords.x) + 'px';
+
+        if (pin.style.left < leftPinLine) {
+          pin.style.left === 0;
+        } else {
+          pin.style.left = testCoords;
+        }
+      };
+    
+      var pinUpHandler = function () {
+        percentGraySepia = pin.offsetLeft / pinLine.offsetWidth;
+        percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth; 
+        percentPhobosHeat = pin.offsetLeft * PHOBOS_HEAT_VALUE / pinLine.offsetWidth;
+
+        FILTERS_EFFECTS = [
+          'none', 
+          'grayscale(' + percentGraySepia + ')',
+          'sepia(' + percentGraySepia + ')', 
+          'invert(' + percentMarvin + '%' + ')', 
+          'blur(' + percentPhobosHeat + 'px' + ')', 
+          'brightness(' + percentPhobosHeat + ')'
+        ];
+
+        prewiev.style.filter = FILTERS_EFFECTS[i];
+
+        document.removeEventListener('mousedown', pinMoveHandler);
+        document.removeEventListener('mousedown', pinUpHandler);
+      };
+
+      document.addEventListener('mousemove', pinMoveHandler);
+      document.addEventListener('mouseup', pinUpHandler);
+    })
   })
 };
 
