@@ -276,7 +276,6 @@ var FILTERS = [
 // var FILTERS = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
 var FILTERS_EFFECTS;
 var LABELS = [original, chrome, sepia, marvin, phobos, heat];
-var filterlist = uploadForm.querySelector('.img-upload__effects .effects__list');
 
 // подстановка массивов и переменных в функцию создания фильтров
 var setFilterEffects = function () {
