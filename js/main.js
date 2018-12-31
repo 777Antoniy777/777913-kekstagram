@@ -65,46 +65,32 @@ var COMMENTS = createComment();
 var commentsList = bigPictureItem.querySelector('.social__comments');
 var bigPictureSocial = bigPictureItem.querySelector('.big-picture__social');
 var BEGIN_COMMENTS_COUNT = commentsList.children.length;
+var commentTemplate = commentsList.querySelector('.social__comment');
 
 var setComments = function (arrayComments) {
   for (var i = 0; i < arrayComments.length; i++) {
     var space = ' ';
+    var commentsItem = commentTemplate.cloneNode(true);
 
-    commentsList.querySelector('.social__picture').src = arrayComments[i].avatar;
-    commentsList.querySelector('.social__text').textContent = arrayComments[i].message;
-    commentsList.querySelector('.social__picture').alt = 'Аватар' + space + arrayComments[i].name;
+    commentsItem.querySelector('.social__picture').src = arrayComments[i].avatar;
+    commentsItem.querySelector('.social__text').textContent = arrayComments[i].message;
+    commentsItem.querySelector('.social__picture').alt = 'Аватар' + space + arrayComments[i].name;
 
     bigPictureSocial.querySelector('.social__caption').textContent = arrayComments[i].description;
     bigPictureSocial.querySelector('.social__picture').src = arrayComments[i].avatar;
     bigPictureSocial.querySelector('.social__picture').alt = 'Аватар' + space + arrayComments[i].name;
 
-    var commentsItem = commentsList.querySelector('.social__comment').cloneNode(true);
     commentsList.appendChild(commentsItem);
-
-    // var currentComments = commentsList.querySelectorAll('.social__comment');
-    // console.log(currentComments);
-
-    // for (i = 0; i < BEGIN_COMMENTS_COUNT; i++) {
-    //   commentsList.removeChild(commentsItem);
-    // }
-  }
-
-  for (i = 0; i < BEGIN_COMMENTS_COUNT; i++) {
-    var beginComments = commentsList.querySelector('.social__comment');
-    commentsList.removeChild(beginComments);
   }
 };
 
 var removeComments = function () {
   var currentComments = commentsList.querySelectorAll('.social__comment');
-  // commentsList.removeChild(currentComments);
-  // console.log(currentComments);
+
   for (var i = 0; i < currentComments.length; i++) {
-    commentsList.removeChild(currentComments);
+    commentsList.removeChild(currentComments[i]);
   }
 }
-
-
 
 // функция создания url, likes, comments
 var createImages = function () {
@@ -191,18 +177,14 @@ var pictureOpen = function (image) {
   bigPictureItem.querySelector('.big-picture__img img').src = image.url;
   bigPictureItem.querySelector('.likes-count').textContent = image.likes;
   bigPictureItem.querySelector('.comments-count').textContent = image.comments.length;
-  //
+  removeComments();
   setComments(image.comments);
-  //
   commentInput.focus();
   document.addEventListener('keydown', pictureKeydownESCHandler);
 };
 
 var pictureClose = function (image) {
   bigPictureItem.classList.add('hidden');
-  //
-  removeComments();
-  //
   document.removeEventListener('keydown', pictureKeydownESCHandler);
 };
 
@@ -219,10 +201,6 @@ bigPictureClose.addEventListener('keydown', function (evt) {
     pictureClose();
   }
 });
-
-
-
-
 
 // редактирование фильтра изображений
 var uploadForm = document.querySelector('.img-upload__form');
@@ -314,7 +292,7 @@ var setFilterEffects = function () {
   };
 }
 
-// функция движенитя пина слайдера
+// функция движения пина слайдера
 var getFilterEffects = function (label, filter, i) {
   label.addEventListener('click', function () {
     prewiev.style.filter = filter;
@@ -338,14 +316,15 @@ var getFilterEffects = function (label, filter, i) {
           x: moveEvt.clientX
         }
         // pin.style.position = 'absolute';
-        var leftPinLine = getComputedStyle(pinLine).getPropertyValue('left');
+        // var leftPinLine = getComputedStyle(pinLine).getPropertyValue('left');
         var testCoords = (pin.offsetLeft - continueCoords.x) + 'px';
+        pin.style.left = testCoords;
 
-        if (pin.style.left < leftPinLine) {
-          pin.style.left === 0;
-        } else {
-          pin.style.left = testCoords;
-        }
+        // if (pin.style.left < leftPinLine) {
+        //   pin.style.left === 0;
+        // } else {
+        //   pin.style.left = testCoords;
+        // }
       };
     
       var pinUpHandler = function () {
@@ -364,8 +343,8 @@ var getFilterEffects = function (label, filter, i) {
 
         prewiev.style.filter = FILTERS_EFFECTS[i];
 
-        document.removeEventListener('mousedown', pinMoveHandler);
-        document.removeEventListener('mousedown', pinUpHandler);
+        document.removeEventListener('mousemove', pinMoveHandler);
+        document.removeEventListener('mouseup', pinUpHandler);
       };
 
       document.addEventListener('mousemove', pinMoveHandler);
