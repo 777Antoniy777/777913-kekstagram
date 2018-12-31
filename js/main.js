@@ -36,7 +36,6 @@ var getRandomNumber = function (min, max) {
 var IMAGES_COUNT = 25;
 var MIN_VALUE = 1;
 var MAX_VALUE_AVATARS = 7;
-var MAX_VALUE_SRC = 26;
 var MIN_VALUE_LIKES = 15;
 var MAX_VALUE_LIKES = 201;
 
@@ -59,12 +58,9 @@ var createComment = function () {
   return comments;
 };
 
-var COMMENTS = createComment();
-
 // функция подставления комментариев в выбранную фотографию
 var commentsList = bigPictureItem.querySelector('.social__comments');
 var bigPictureSocial = bigPictureItem.querySelector('.big-picture__social');
-var BEGIN_COMMENTS_COUNT = commentsList.children.length;
 var commentTemplate = commentsList.querySelector('.social__comment');
 
 var setComments = function (arrayComments) {
@@ -90,7 +86,7 @@ var removeComments = function () {
   for (var i = 0; i < currentComments.length; i++) {
     commentsList.removeChild(currentComments[i]);
   }
-}
+};
 
 // функция создания url, likes, comments
 var createImages = function () {
@@ -134,8 +130,8 @@ var callPictureClick = function (templateItem, image) {
   templateItem.addEventListener('click', function (evt) {
     evt.preventDefault();
     pictureOpen(image);
-  })
-}
+  });
+};
 
 // открытие полноэкранной картинки с помощью ENTER и закрытие с помощью ESC
 var callPictureEnter = function (templateItem, image) {
@@ -144,8 +140,8 @@ var callPictureEnter = function (templateItem, image) {
       evt.preventDefault();
       pictureOpen(image);
     }
-  })
-}
+  });
+};
 
 setImages(IMAGES);
 
@@ -167,9 +163,9 @@ var commentInput = bigPictureItem.querySelector('.social__footer-text');
 
 var pictureKeydownESCHandler = function (evt) {
   if (evt.keyCode === CODE_BUTTON_ESC) {
-    evt.preventDefault()
+    evt.preventDefault();
     pictureClose();
-  } 
+  } ;
 };
 
 var pictureOpen = function (image) {
@@ -183,7 +179,7 @@ var pictureOpen = function (image) {
   document.addEventListener('keydown', pictureKeydownESCHandler);
 };
 
-var pictureClose = function (image) {
+var pictureClose = function () {
   bigPictureItem.classList.add('hidden');
   document.removeEventListener('keydown', pictureKeydownESCHandler);
 };
@@ -208,21 +204,19 @@ var uploadFile = uploadForm.querySelector('#upload-file');
 var uploadSetup = uploadForm.querySelector('.img-upload__overlay');
 var hashtagInput = uploadForm.querySelector('.text__hashtags');
 var setupClose = uploadForm.querySelector('.img-upload__cancel');
-var sliderPin = uploadForm.querySelector('.effect-level__pin');
 
 // закрытие окна с фильтрами при нажатии на ESC
 var fileKeydownESCHandler = function (evt) {
   if (evt.keyCode === CODE_BUTTON_ESC) {
     evt.preventDefault()
     fileClose();
-  } 
+  }; 
 };
 
 var fileOpen = function () {
   uploadSetup.classList.remove('hidden');
   hashtagInput.focus();
   setFilterEffects();
-
   document.addEventListener('keydown', fileKeydownESCHandler);
 };
 
@@ -269,7 +263,6 @@ var sepia = uploadForm.querySelector('label[for=effect-sepia]');
 var marvin = uploadForm.querySelector('label[for=effect-marvin]');
 var phobos = uploadForm.querySelector('label[for=effect-phobos]');
 var heat = uploadForm.querySelector('label[for=effect-heat]');
-
 var prewiev = uploadForm.querySelector('.img-upload__preview img');
 var FILTERS = [
   'none', 
