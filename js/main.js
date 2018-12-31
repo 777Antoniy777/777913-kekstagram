@@ -165,7 +165,7 @@ var pictureKeydownESCHandler = function (evt) {
   if (evt.keyCode === CODE_BUTTON_ESC) {
     evt.preventDefault();
     pictureClose();
-  } ;
+  }
 };
 
 var pictureOpen = function (image) {
@@ -208,9 +208,9 @@ var setupClose = uploadForm.querySelector('.img-upload__cancel');
 // закрытие окна с фильтрами при нажатии на ESC
 var fileKeydownESCHandler = function (evt) {
   if (evt.keyCode === CODE_BUTTON_ESC) {
-    evt.preventDefault()
+    evt.preventDefault();
     fileClose();
-  }; 
+  }
 };
 
 var fileOpen = function () {
@@ -247,13 +247,13 @@ setupClose.addEventListener('click', function () {
 
 // отпускание пина слайдера
 var pinLine = uploadForm.querySelector('.effect-level__line');
-var pinLineFill = uploadForm.querySelector('.effect-level__depth');
+// var pinLineFill = uploadForm.querySelector('.effect-level__depth');
 var pin = uploadForm.querySelector('.effect-level__pin');
 var MARVIN_VALUE = 100;
 var PHOBOS_HEAT_VALUE = 3;
 
 var percentGraySepia;
-var percentMarvin; 
+var percentMarvin;
 var percentPhobosHeat;
 
 // создание фильтров
@@ -263,27 +263,27 @@ var sepia = uploadForm.querySelector('label[for=effect-sepia]');
 var marvin = uploadForm.querySelector('label[for=effect-marvin]');
 var phobos = uploadForm.querySelector('label[for=effect-phobos]');
 var heat = uploadForm.querySelector('label[for=effect-heat]');
+
 var prewiev = uploadForm.querySelector('.img-upload__preview img');
 var FILTERS = [
-  'none', 
-  'grayscale(0)', 
-  'sepia(0)', 
-  'invert(0%)', 
-  'blur(0px)', 
+  'none',
+  'grayscale(0)',
+  'sepia(0)',
+  'invert(0%)',
+  'blur(0px)',
   'brightness(0.1)'
 ];
 // var FILTERS = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
 var FILTERS_EFFECTS;
 var LABELS = [original, chrome, sepia, marvin, phobos, heat];
 var filterlist = uploadForm.querySelector('.img-upload__effects .effects__list');
-var filterItem = filterlist.querySelector('.effects__item');
 
 // подстановка массивов и переменных в функцию создания фильтров
 var setFilterEffects = function () {
   for (var i = 0; i < LABELS.length; i++) {
     getFilterEffects(LABELS[i], FILTERS[i], i);
-  };
-}
+  }
+};
 
 // функция движения пина слайдера
 var getFilterEffects = function (label, filter, i) {
@@ -296,18 +296,18 @@ var getFilterEffects = function (label, filter, i) {
       var startCoords = {
         x: pin.offsetLeft
         // x: evt.clientX
-      }
-    
+      };
+
       var pinMoveHandler = function (moveEvt) {
         moveEvt.preventDefault();
 
         var continueCoords = {
           x: startCoords.x - moveEvt.clientX
-        }
+        };
 
         startCoords = {
           x: moveEvt.clientX
-        }
+        };
         // pin.style.position = 'absolute';
         // var leftPinLine = getComputedStyle(pinLine).getPropertyValue('left');
         var testCoords = (pin.offsetLeft - continueCoords.x) + 'px';
@@ -319,18 +319,18 @@ var getFilterEffects = function (label, filter, i) {
         //   pin.style.left = testCoords;
         // }
       };
-    
+
       var pinUpHandler = function () {
         percentGraySepia = pin.offsetLeft / pinLine.offsetWidth;
-        percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth; 
+        percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth;
         percentPhobosHeat = pin.offsetLeft * PHOBOS_HEAT_VALUE / pinLine.offsetWidth;
 
         FILTERS_EFFECTS = [
-          'none', 
+          'none',
           'grayscale(' + percentGraySepia + ')',
-          'sepia(' + percentGraySepia + ')', 
-          'invert(' + percentMarvin + '%' + ')', 
-          'blur(' + percentPhobosHeat + 'px' + ')', 
+          'sepia(' + percentGraySepia + ')',
+          'invert(' + percentMarvin + '%' + ')',
+          'blur(' + percentPhobosHeat + 'px' + ')',
           'brightness(' + percentPhobosHeat + ')'
         ];
 
@@ -342,8 +342,8 @@ var getFilterEffects = function (label, filter, i) {
 
       document.addEventListener('mousemove', pinMoveHandler);
       document.addEventListener('mouseup', pinUpHandler);
-    })
-  })
+    });
+  });
 };
 
 // setFilterEffects();
