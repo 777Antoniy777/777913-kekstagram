@@ -217,6 +217,8 @@ var fileOpen = function () {
   uploadSetup.classList.remove('hidden');
   hashtagInput.focus();
   setFilterEffects();
+  pin.style.left = 40 + "%";
+  pinLineFill.style.width = 40 + "%";
   document.addEventListener('keydown', fileKeydownESCHandler);
 };
 
@@ -242,12 +244,9 @@ setupClose.addEventListener('click', function () {
   fileClose();
 });
 
-// УДАЛИ потом
-// uploadSetup.classList.remove('hidden');
-
 // отпускание пина слайдера
 var pinLine = uploadForm.querySelector('.effect-level__line');
-// var pinLineFill = uploadForm.querySelector('.effect-level__depth');
+var pinLineFill = uploadForm.querySelector('.effect-level__depth');
 var pin = uploadForm.querySelector('.effect-level__pin');
 var MARVIN_VALUE = 100;
 var PHOBOS_HEAT_VALUE = 3;
@@ -265,17 +264,27 @@ var phobos = uploadForm.querySelector('label[for=effect-phobos]');
 var heat = uploadForm.querySelector('label[for=effect-heat]');
 
 var prewiev = uploadForm.querySelector('.img-upload__preview img');
+// var FILTERS = [
+//   'none',
+//   'grayscale(0)',
+//   'sepia(0)',
+//   'invert(0%)',
+//   'blur(0px)',
+//   'brightness(0.1)'
+// ];
 var FILTERS = [
   'none',
-  'grayscale(0)',
-  'sepia(0)',
-  'invert(0%)',
-  'blur(0px)',
-  'brightness(0.1)'
+  'grayscale(0.4)',
+  'sepia(0.4)',
+  'invert(40%)',
+  'blur(1.2px)',
+  'brightness(1.2)'
 ];
 // var FILTERS = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
 var FILTERS_EFFECTS;
 var LABELS = [original, chrome, sepia, marvin, phobos, heat];
+
+// var testField = uploadSetup.querySelector('.img-upload__effect-level');
 
 // подстановка массивов и переменных в функцию создания фильтров
 var setFilterEffects = function () {
@@ -288,17 +297,20 @@ var setFilterEffects = function () {
 var getFilterEffects = function (label, filter, i) {
   label.addEventListener('click', function () {
     prewiev.style.filter = filter;
+    pin.style.left = 40 + "%";
+    pinLineFill.style.width = 40 + "%";
 
     pin.addEventListener('mousedown', function (evt) {
       evt.preventDefault();
 
       var startCoords = {
-        x: pin.offsetLeft
-        // x: evt.clientX
+        // x: pin.offsetLeft
+        x: evt.clientX
       };
 
       var pinMoveHandler = function (moveEvt) {
         moveEvt.preventDefault();
+        // console.log(evt);
 
         var continueCoords = {
           x: startCoords.x - moveEvt.clientX
@@ -307,16 +319,21 @@ var getFilterEffects = function (label, filter, i) {
         startCoords = {
           x: moveEvt.clientX
         };
-        // pin.style.position = 'absolute';
-        // var leftPinLine = getComputedStyle(pinLine).getPropertyValue('left');
-        var testCoords = (pin.offsetLeft - continueCoords.x) + 'px';
-        pin.style.left = testCoords;
 
-        // if (pin.style.left < leftPinLine) {
-        //   pin.style.left === 0;
-        // } else {
-        //   pin.style.left = testCoords;
-        // }
+        pinLineFill.style.width = (pin.offsetLeft - continueCoords.x) + 'px';
+
+        if (pin.offsetLeft < 0) {
+          pin.style.left = 0 + '%';
+          // pinLineFill.style.width = 0 + '%';
+        } 
+        else if (pin.offsetLeft > pinLine.offsetWidth) {
+          pin.style.left = 100 + '%';
+          // pinLineFill.style.width = 100 + '%';
+        }
+         else {
+          pin.style.left = (pin.offsetLeft - continueCoords.x) + 'px';
+          // pinLineFill.style.width = (pin.offsetLeft - continueCoords.x) + 'px';
+        }
       };
 
       var pinUpHandler = function () {
