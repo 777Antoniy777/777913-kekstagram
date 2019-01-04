@@ -375,6 +375,7 @@ pin.addEventListener('mousedown', function (evt) {
 });
 
 // валидация текстовых инпутов в окне фильтра
+
 // var uploadForm = document.querySelector('.img-upload__form');
 // var uploadFile = uploadForm.querySelector('#upload-file');
 // var uploadSetup = uploadForm.querySelector('.img-upload__overlay');
@@ -407,21 +408,29 @@ var validateForm = function () {
   // });
 
   hashtagInput.addEventListener('input', function (evt) {
+    var target = evt.target;
     var HASHTAGS = target.value.split('#', 5);
 
       for (var i = 0; i < HASHTAGS.length; i++) {
-        var target = evt.target;
-        if (target.value.length < 2) {
+        if (HASHTAGS[i].length < 1) {
           target.setCustomValidity('Хэштэг слишком короткий');
-        } else if (target.value.length > 20) {
+        } else if (HASHTAGS[i].length > 19) {
           hashtagInput.setCustomValidity('Хэштэг слишком длинный');
-        } else {
+        }
+        //  else if (HASHTAGS.length > 5) {
+        //   hashtagInput.setCustomValidity('Не больше 5-ти хэштэгов');
+        // } else if (HASHTAGS[i].toLowerCase() === HASHTAGS[i].toLowerCase()) {
+        //   hashtagInput.setCustomValidity('Не больше 5-ти хэштэгов');
+        // } 
+        else {
           target.setCustomValidity('');
         }
       }
   });
 };
+// #e #r #t #y #u #i #i
 
+// функция изменения масштаба
 var setScale = function () {
   var buttonBigger = uploadForm.querySelector('.scale__control--bigger');
   var buttonSmaller = uploadForm.querySelector('.scale__control--smaller');
@@ -431,41 +440,71 @@ var setScale = function () {
   prewiev.style.transform = 'scale(1)';
   buttonValue.maxLength = 4;
 
-  // var scaleValues = [25, 50, 75, 100];
-
-  // // var currentValueScale = 100;
+  var scaleValues = [25, 50, 75, 100];
   var stepValueScale = 25;
-  var carrentSmallScaleValue = 25;
-  var carrentBigScaleValue = 100;
 
-  var buttonSmallerClickHandler = function () {
-    buttonSmaller.removeEventListener('click', buttonBiggerClickHandler);
+  // var smallerValue = scaleValues[3];
+  var smallerValueIndex = 3;
+  buttonSmaller.addEventListener ('click', function () {
 
-    if (carrentBigScaleValue === 25) {
-      buttonValue.value = 25 + '%';
-      prewiev.style.transform = 'scale(' + 25 / 100 + ')';
-    } else {
-      carrentBigScaleValue -= stepValueScale; 
-      buttonValue.value = carrentBigScaleValue + '%';
-      prewiev.style.transform = 'scale(' + carrentBigScaleValue / 100 + ')';
-    }
-  }
+      if (smallerValueIndex === scaleValues.length - 4) {
+        // smallerValueIndex = 3;
+        buttonValue.value = 25 + '%';
+        prewiev.style.transform = 'scale(' + 25 / 100 + ')';
+      } else {
+        smallerValueIndex--;
+      }
+      buttonValue.value = scaleValues[smallerValueIndex] + '%';
+      prewiev.style.transform = 'scale(' + scaleValues[smallerValueIndex] / 100 + ')';
+  });
 
-  var buttonBiggerClickHandler = function () {
-    buttonBigger.removeEventListener('click', buttonSmallerClickHandler);
+  var biggerValueIndex = 0;
+  buttonBigger.addEventListener ('click', function () {
 
-    if (carrentSmallScaleValue === 100) {
-      buttonValue.value = 100 + '%';
-      prewiev.style.transform = 'scale(' + 100 / 100 + ')';
-    } else {
-      carrentSmallScaleValue += stepValueScale;
-      buttonValue.value = carrentSmallScaleValue + '%';
-      prewiev.style.transform = 'scale(' + carrentSmallScaleValue / 100 + ')';
-    }
-  };
+      if (biggerValueIndex === scaleValues.length - 1) {
+        // biggerValueIndex = 0;
+        buttonValue.value = 100 + '%';
+        prewiev.style.transform = 'scale(' + 100 / 100 + ')';
+      } else {
+        biggerValueIndex++;
+      }
+      buttonValue.value = scaleValues[biggerValueIndex] + '%';
+      prewiev.style.transform = 'scale(' + scaleValues[biggerValueIndex] / 100 + ')';
+  });
 
-  buttonSmaller.addEventListener('click', buttonSmallerClickHandler);
-  buttonBigger.addEventListener('click', buttonBiggerClickHandler);
+  // var currentValueScale = 100;
+  // var stepValueScale = 25;
+  // var carrentSmallScaleValue = 25;
+  // var carrentBigScaleValue = 100;
+
+  // var buttonSmallerClickHandler = function () {
+  //   buttonSmaller.removeEventListener('click', buttonBiggerClickHandler);
+
+  //   if (carrentBigScaleValue === 25) {
+  //     buttonValue.value = 25 + '%';
+  //     prewiev.style.transform = 'scale(' + 25 / 100 + ')';
+  //   } else {
+  //     carrentBigScaleValue -= stepValueScale; 
+  //     buttonValue.value = carrentBigScaleValue + '%';
+  //     prewiev.style.transform = 'scale(' + carrentBigScaleValue / 100 + ')';
+  //   }
+  // }
+
+  // var buttonBiggerClickHandler = function () {
+  //   buttonBigger.removeEventListener('click', buttonSmallerClickHandler);
+
+  //   if (carrentSmallScaleValue === 100) {
+  //     buttonValue.value = 100 + '%';
+  //     prewiev.style.transform = 'scale(' + 100 / 100 + ')';
+  //   } else {
+  //     carrentSmallScaleValue += stepValueScale;
+  //     buttonValue.value = carrentSmallScaleValue + '%';
+  //     prewiev.style.transform = 'scale(' + carrentSmallScaleValue / 100 + ')';
+  //   }
+  // };
+
+  // buttonSmaller.addEventListener('click', buttonSmallerClickHandler);
+  // buttonBigger.addEventListener('click', buttonBiggerClickHandler);
 
   // var changeButtonValue = function () {
   //   buttonValue.addEventListener('input', function (evt) {
@@ -479,7 +518,6 @@ var setScale = function () {
   // }
 
   // changeButtonValue();
-
 };
 
 
@@ -504,4 +542,3 @@ var setScale = function () {
 //     console.log(i);
 //   }, i * 1000)
 // };
-
