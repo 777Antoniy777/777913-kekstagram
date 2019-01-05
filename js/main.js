@@ -80,7 +80,7 @@ var setComments = function (arrayComments) {
     commentsList.appendChild(commentsItem);
 
     currentComments.push(commentsItem);
-  } 
+  }
 };
 
 var removeComments = function () {
@@ -335,9 +335,15 @@ var getFilterEffects = function (label, filter, i) {
     pinLineFill.style.width = 100 + '%';
     FILTER_INDEX = i;
 
+    // if (i === 0) {
+    //   testField.classList.add('hidden');
+    // } else {
+    //   testField.classList.remove('hidden');
+    // }
+
     i === 0 ? testField.classList.add('hidden') : testField.classList.remove('hidden');
-  }
-)};
+  });
+};
 
 pin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
