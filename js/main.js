@@ -341,7 +341,9 @@ var getFilterEffects = function (label, filter, i) {
     //   testField.classList.remove('hidden');
     // }
 
+    /* stylelint-disable */
     i === 0 ? testField.classList.add('hidden') : testField.classList.remove('hidden');
+    /* stylelint-enable */
   });
 };
 
@@ -455,7 +457,7 @@ var setScale = function () {
   var scaleValues = [25, 50, 75, 100];
   var scaleValueIndex = 3;
 
-  buttonSmaller.addEventListener ('click', function () {
+  buttonSmaller.addEventListener('click', function () {
     if (scaleValueIndex === scaleValues.length - 4) {
       buttonValue.value = 25 + '%';
       prewiev.style.transform = 'scale(' + 25 / 100 + ')';
@@ -467,7 +469,7 @@ var setScale = function () {
     prewiev.style.transform = 'scale(' + scaleValues[scaleValueIndex] / 100 + ')';
   });
 
-  buttonBigger.addEventListener ('click', function () {
+  buttonBigger.addEventListener('click', function () {
     if (scaleValueIndex === scaleValues.length - 1) {
       buttonValue.value = 100 + '%';
       prewiev.style.transform = 'scale(' + 100 / 100 + ')';
