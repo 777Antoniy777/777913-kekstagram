@@ -62,6 +62,7 @@ var createComment = function () {
 var commentsList = bigPictureItem.querySelector('.social__comments');
 var bigPictureSocial = bigPictureItem.querySelector('.big-picture__social');
 var commentTemplate = commentsList.querySelector('.social__comment');
+var currentComments = commentsList.querySelectorAll('.social__comment');
 var SPACE = ' ';
 
 var setComments = function (arrayComments) {
@@ -77,14 +78,25 @@ var setComments = function (arrayComments) {
     bigPictureSocial.querySelector('.social__picture').alt = 'Аватар' + SPACE + arrayComments[i].name;
 
     commentsList.appendChild(commentsItem);
-  }
+
+    currentComments.push(commentsItem);
+  }  
 };
 
 var removeComments = function () {
-  var currentComments = commentsList.querySelectorAll('.social__comment');
 
   for (var i = 0; i < currentComments.length; i++) {
     commentsList.removeChild(currentComments[i]);
+  }
+
+  currentComments = [];
+};
+
+var hideComments = function () {
+
+  for (var i = 5; i < currentComments.length; i++) {
+    var hiddenComment = currentComments[i];
+    hiddenComment.style.display = 'none';
   }
 };
 
@@ -108,6 +120,7 @@ var IMAGES = createImages();
 
 // функция подставления данных в гл.стр
 var templatePicture = document.querySelector('#picture');
+var body = document.querySelector('body');
 
 var setImages = function (arrayImages) {
   for (var i = 0; i < arrayImages.length; i++) {
@@ -173,8 +186,12 @@ var pictureOpen = function (image) {
   bigPictureItem.querySelector('.big-picture__img img').src = image.url;
   bigPictureItem.querySelector('.likes-count').textContent = image.likes;
   bigPictureItem.querySelector('.comments-count').textContent = image.comments.length;
+  body.classList.add('modal-open');
   removeComments();
   setComments(image.comments);
+
+  hideComments();
+
   commentInput.focus();
   document.addEventListener('keydown', pictureKeydownESCHandler);
 };
@@ -182,6 +199,7 @@ var pictureOpen = function (image) {
 var pictureClose = function () {
   bigPictureItem.classList.add('hidden');
   document.removeEventListener('keydown', pictureKeydownESCHandler);
+  body.classList.remove('modal-open');
 };
 
 // закрытие полноэкранной картинки с помощью мыши
@@ -209,7 +227,10 @@ var setupClose = uploadForm.querySelector('.img-upload__cancel');
 var fileKeydownESCHandler = function (evt) {
   if (evt.keyCode === CODE_BUTTON_ESC) {
     evt.preventDefault();
-    fileClose();
+
+    if (hashtagInput !== evt.target) {
+      fileClose();
+    }
   }
 };
 
@@ -218,13 +239,11 @@ var fileOpen = function () {
   hashtagInput.focus();
   setFilterEffects();
   validateForm();
+  setScale();
   testField.classList.add('hidden');
   prewiev.style.filter = FILTERS[0];
   pin.style.left = 100 + '%';
   pinLineFill.style.width = 100 + '%';
-
-  setScale();
-
   document.addEventListener('keydown', fileKeydownESCHandler);
 };
 
@@ -255,11 +274,9 @@ var pinLine = uploadForm.querySelector('.effect-level__line');
 var pinLineFill = uploadForm.querySelector('.effect-level__depth');
 var pin = uploadForm.querySelector('.effect-level__pin');
 var MARVIN_VALUE = 100;
-var PHOBOS_HEAT_VALUE = 3;
-
-var percentGraySepia;
-var percentMarvin;
-var percentPhobosHeat;
+var PHOBOS_VALUE = 3;
+var HEAT_VALUE_MIN = 1;
+var HEAT_VALUE_MAX = 3;
 
 // создание фильтров
 var original = uploadForm.querySelector('label[for=effect-none]');
@@ -340,17 +357,18 @@ pin.addEventListener('mousedown', function (evt) {
       x: moveEvt.clientX
     };
 
-    percentGraySepia = pin.offsetLeft / pinLine.offsetWidth;
-    percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth;
-    percentPhobosHeat = pin.offsetLeft * PHOBOS_HEAT_VALUE / pinLine.offsetWidth;
+    var percentGraySepia = pin.offsetLeft / pinLine.offsetWidth;
+    var percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth;
+    var percentPhobos = pin.offsetLeft * PHOBOS_VALUE / pinLine.offsetWidth;
+    var perscentHeat = (pin.offsetLeft * (HEAT_VALUE_MAX-HEAT_VALUE_MIN) / pinLine.offsetWidth) + HEAT_VALUE_MIN;
 
     FILTERS_EFFECTS = [
       'none',
       'grayscale(' + percentGraySepia + ')',
       'sepia(' + percentGraySepia + ')',
       'invert(' + percentMarvin + '%' + ')',
-      'blur(' + percentPhobosHeat + 'px' + ')',
-      'brightness(' + percentPhobosHeat + ')'
+      'blur(' + percentPhobos + 'px' + ')',
+      'brightness(' + perscentHeat + ')'
     ];
 
     prewiev.style.filter = FILTERS_EFFECTS[FILTER_INDEX];
@@ -388,47 +406,36 @@ var validateForm = function () {
   hashtagInput.type = 'text';
   hashtagInput.minLength = '2';
   hashtagCommentInput.maxLength = '140';
-  // hashtagInput.pattern = '[#]{1}[A-Za-zА-Яа-яЁё0-9]+$';
-
-  var lattice = '#';
-  // var HASHTAGS = '#FFfgghh ,#45fg ,#JJjjdhh ,#ds#DD ,#0909f ,#FFFFFF';
-  // var HASHTAGS = hashtagInput.value;
-  // console.log(HASHTAGS);
-
-  // var hashtag = HASHTAGS.split('#', 5);
-
-  // hashtagInput.addEventListener('invalid', function () {
-  //   if (hashtagInput.validity.tooShort) {
-  //     hashtagInput.setCustomValidity('Хэштэг слишком короткий');
-  //   } else if (hashtagInput.validity.tooLong) {
-  //     hashtagInput.setCustomValidity('Хэштэг слишком длинный');
-  //   } else if (hashtagInput.validity.patternMismatch) {
-  //     hashtagInput.setCustomValidity('Начните свой хэштег с единственной #');
-  //   }
-  // });
 
   hashtagInput.addEventListener('input', function (evt) {
     var target = evt.target;
-    var HASHTAGS = target.value.split('#', 5);
+    var HASHTAGS = target.value.split(' ');
+
+    target.setCustomValidity('');
+    
+    if (HASHTAGS.length > 5) {
+      hashtagInput.setCustomValidity('Не больше 5-ти хэштэгов');
+    } else {
 
       for (var i = 0; i < HASHTAGS.length; i++) {
-        if (HASHTAGS[i].length < 1) {
+        if (HASHTAGS[i].length < 2) {
           target.setCustomValidity('Хэштэг слишком короткий');
-        } else if (HASHTAGS[i].length > 19) {
+        } else if (HASHTAGS[i].substr(0, 1) !== '#') {
+          target.setCustomValidity('Необходима "#"');
+        }
+        else if (HASHTAGS[i].length > 20) {
           hashtagInput.setCustomValidity('Хэштэг слишком длинный');
         }
-        //  else if (HASHTAGS.length > 5) {
-        //   hashtagInput.setCustomValidity('Не больше 5-ти хэштэгов');
-        // } else if (HASHTAGS[i].toLowerCase() === HASHTAGS[i].toLowerCase()) {
-        //   hashtagInput.setCustomValidity('Не больше 5-ти хэштэгов');
-        // } 
-        else {
-          target.setCustomValidity('');
+
+        for (var j = 0; j < HASHTAGS.length; j++) {
+          if (HASHTAGS[i].toLowerCase() === HASHTAGS[j].toLowerCase() && i !== j) {
+            hashtagInput.setCustomValidity('Найден одинаковый хэштэг');
+          } 
         }
       }
+    }
   });
 };
-// #e #r #t #y #u #i #i
 
 // функция изменения масштаба
 var setScale = function () {
@@ -441,101 +448,45 @@ var setScale = function () {
   buttonValue.maxLength = 4;
 
   var scaleValues = [25, 50, 75, 100];
-  var stepValueScale = 25;
+  var scaleValueIndex = 3;
 
-  // var smallerValue = scaleValues[3];
-  var smallerValueIndex = 3;
   buttonSmaller.addEventListener ('click', function () {
 
-      if (smallerValueIndex === scaleValues.length - 4) {
-        // smallerValueIndex = 3;
+      if (scaleValueIndex === scaleValues.length - 4) {
         buttonValue.value = 25 + '%';
         prewiev.style.transform = 'scale(' + 25 / 100 + ')';
       } else {
-        smallerValueIndex--;
+        scaleValueIndex--;
       }
-      buttonValue.value = scaleValues[smallerValueIndex] + '%';
-      prewiev.style.transform = 'scale(' + scaleValues[smallerValueIndex] / 100 + ')';
+      buttonValue.value = scaleValues[scaleValueIndex] + '%';
+      prewiev.style.transform = 'scale(' + scaleValues[scaleValueIndex] / 100 + ')';
   });
 
-  var biggerValueIndex = 0;
   buttonBigger.addEventListener ('click', function () {
 
-      if (biggerValueIndex === scaleValues.length - 1) {
-        // biggerValueIndex = 0;
+      if (scaleValueIndex === scaleValues.length - 1) {
         buttonValue.value = 100 + '%';
         prewiev.style.transform = 'scale(' + 100 / 100 + ')';
       } else {
-        biggerValueIndex++;
+        scaleValueIndex++;
       }
-      buttonValue.value = scaleValues[biggerValueIndex] + '%';
-      prewiev.style.transform = 'scale(' + scaleValues[biggerValueIndex] / 100 + ')';
+      buttonValue.value = scaleValues[scaleValueIndex] + '%';
+      prewiev.style.transform = 'scale(' + scaleValues[scaleValueIndex] / 100 + ')';
   });
 
-  // var currentValueScale = 100;
-  // var stepValueScale = 25;
-  // var carrentSmallScaleValue = 25;
-  // var carrentBigScaleValue = 100;
+  var changeButtonValue = function () {
+    buttonValue.addEventListener('input', function (evt) {
+      var target = evt.target;
+      var scaleValue = parseInt(target.value, 10)
 
-  // var buttonSmallerClickHandler = function () {
-  //   buttonSmaller.removeEventListener('click', buttonBiggerClickHandler);
+      if (scaleValue >= 25 && scaleValue <= 100) {
+        prewiev.style.transform = 'scale(' + scaleValue / 100 + ')';
+      }
+    }) 
+  }
 
-  //   if (carrentBigScaleValue === 25) {
-  //     buttonValue.value = 25 + '%';
-  //     prewiev.style.transform = 'scale(' + 25 / 100 + ')';
-  //   } else {
-  //     carrentBigScaleValue -= stepValueScale; 
-  //     buttonValue.value = carrentBigScaleValue + '%';
-  //     prewiev.style.transform = 'scale(' + carrentBigScaleValue / 100 + ')';
-  //   }
-  // }
-
-  // var buttonBiggerClickHandler = function () {
-  //   buttonBigger.removeEventListener('click', buttonSmallerClickHandler);
-
-  //   if (carrentSmallScaleValue === 100) {
-  //     buttonValue.value = 100 + '%';
-  //     prewiev.style.transform = 'scale(' + 100 / 100 + ')';
-  //   } else {
-  //     carrentSmallScaleValue += stepValueScale;
-  //     buttonValue.value = carrentSmallScaleValue + '%';
-  //     prewiev.style.transform = 'scale(' + carrentSmallScaleValue / 100 + ')';
-  //   }
-  // };
-
-  // buttonSmaller.addEventListener('click', buttonSmallerClickHandler);
-  // buttonBigger.addEventListener('click', buttonBiggerClickHandler);
-
-  // var changeButtonValue = function () {
-  //   buttonValue.addEventListener('input', function (evt) {
-  //     var target = evt.target;
-  //     if (target.value >= 25 || target.value <= 100) {
-  //       prewiev.style.transform = 'scale(' + target.value / 100 + ')';
-  //     }
-
-  //     console.log(target.value);
-  //   }) 
-  // }
-
-  // changeButtonValue();
+  changeButtonValue();
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // for (var i = 0; i <= 5; i++) {
 //   setTimeout (function () {
