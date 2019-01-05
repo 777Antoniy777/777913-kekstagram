@@ -229,7 +229,7 @@ var fileKeydownESCHandler = function (evt) {
 
     if (hashtagInput !== evt.target && hashtagCommentInput !== evt.target) {
       fileClose();
-    } 
+    }
   }
 };
 
