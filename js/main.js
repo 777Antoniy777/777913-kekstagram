@@ -80,7 +80,7 @@ var setComments = function (arrayComments) {
     commentsList.appendChild(commentsItem);
 
     currentComments.push(commentsItem);
-  }  
+  } 
 };
 
 var removeComments = function () {
@@ -335,7 +335,7 @@ var getFilterEffects = function (label, filter, i) {
     pinLineFill.style.width = 100 + '%';
     FILTER_INDEX = i;
 
-    i === 0 ? testField.classList.add('hidden') : testField.classList.remove('hidden')
+    i === 0 ? testField.classList.add('hidden') : testField.classList.remove('hidden');
   }
 )};
 
@@ -360,7 +360,7 @@ pin.addEventListener('mousedown', function (evt) {
     var percentGraySepia = pin.offsetLeft / pinLine.offsetWidth;
     var percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth;
     var percentPhobos = pin.offsetLeft * PHOBOS_VALUE / pinLine.offsetWidth;
-    var perscentHeat = (pin.offsetLeft * (HEAT_VALUE_MAX-HEAT_VALUE_MIN) / pinLine.offsetWidth) + HEAT_VALUE_MIN;
+    var perscentHeat = (pin.offsetLeft * (HEAT_VALUE_MAX - HEAT_VALUE_MIN) / pinLine.offsetWidth) + HEAT_VALUE_MIN;
 
     FILTERS_EFFECTS = [
       'none',
@@ -412,7 +412,7 @@ var validateForm = function () {
     var HASHTAGS = target.value.split(' ');
 
     target.setCustomValidity('');
-    
+
     if (HASHTAGS.length > 5) {
       hashtagInput.setCustomValidity('Не больше 5-ти хэштэгов');
     } else {
@@ -422,15 +422,14 @@ var validateForm = function () {
           target.setCustomValidity('Хэштэг слишком короткий');
         } else if (HASHTAGS[i].substr(0, 1) !== '#') {
           target.setCustomValidity('Необходима "#"');
-        }
-        else if (HASHTAGS[i].length > 20) {
+        } else if (HASHTAGS[i].length > 20) {
           hashtagInput.setCustomValidity('Хэштэг слишком длинный');
         }
 
         for (var j = 0; j < HASHTAGS.length; j++) {
           if (HASHTAGS[i].toLowerCase() === HASHTAGS[j].toLowerCase() && i !== j) {
             hashtagInput.setCustomValidity('Найден одинаковый хэштэг');
-          } 
+          }
         }
       }
     }
@@ -451,39 +450,39 @@ var setScale = function () {
   var scaleValueIndex = 3;
 
   buttonSmaller.addEventListener ('click', function () {
+    if (scaleValueIndex === scaleValues.length - 4) {
+      buttonValue.value = 25 + '%';
+      prewiev.style.transform = 'scale(' + 25 / 100 + ')';
+    } else {
+      scaleValueIndex--;
+    }
 
-      if (scaleValueIndex === scaleValues.length - 4) {
-        buttonValue.value = 25 + '%';
-        prewiev.style.transform = 'scale(' + 25 / 100 + ')';
-      } else {
-        scaleValueIndex--;
-      }
-      buttonValue.value = scaleValues[scaleValueIndex] + '%';
-      prewiev.style.transform = 'scale(' + scaleValues[scaleValueIndex] / 100 + ')';
+    buttonValue.value = scaleValues[scaleValueIndex] + '%';
+    prewiev.style.transform = 'scale(' + scaleValues[scaleValueIndex] / 100 + ')';
   });
 
   buttonBigger.addEventListener ('click', function () {
+    if (scaleValueIndex === scaleValues.length - 1) {
+      buttonValue.value = 100 + '%';
+      prewiev.style.transform = 'scale(' + 100 / 100 + ')';
+    } else {
+      scaleValueIndex++;
+    }
 
-      if (scaleValueIndex === scaleValues.length - 1) {
-        buttonValue.value = 100 + '%';
-        prewiev.style.transform = 'scale(' + 100 / 100 + ')';
-      } else {
-        scaleValueIndex++;
-      }
-      buttonValue.value = scaleValues[scaleValueIndex] + '%';
-      prewiev.style.transform = 'scale(' + scaleValues[scaleValueIndex] / 100 + ')';
+    buttonValue.value = scaleValues[scaleValueIndex] + '%';
+    prewiev.style.transform = 'scale(' + scaleValues[scaleValueIndex] / 100 + ')';
   });
 
   var changeButtonValue = function () {
     buttonValue.addEventListener('input', function (evt) {
       var target = evt.target;
-      var scaleValue = parseInt(target.value, 10)
+      var scaleValue = parseInt(target.value, 10);
 
       if (scaleValue >= 25 && scaleValue <= 100) {
         prewiev.style.transform = 'scale(' + scaleValue / 100 + ')';
       }
-    }) 
-  }
+    });
+  };
 
   changeButtonValue();
 };
