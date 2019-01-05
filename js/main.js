@@ -335,15 +335,11 @@ var getFilterEffects = function (label, filter, i) {
     pinLineFill.style.width = 100 + '%';
     FILTER_INDEX = i;
 
-    // if (i === 0) {
-    //   testField.classList.add('hidden');
-    // } else {
-    //   testField.classList.remove('hidden');
-    // }
-
-    /* stylelint-disable */
-    i === 0 ? testField.classList.add('hidden') : testField.classList.remove('hidden');
-    /* stylelint-enable */
+    if (i === 0) {
+      testField.classList.add('hidden');
+    } else {
+      testField.classList.remove('hidden');
+    }
   });
 };
 
