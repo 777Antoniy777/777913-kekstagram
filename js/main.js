@@ -220,7 +220,6 @@ bigPictureClose.addEventListener('keydown', function (evt) {
 var uploadForm = document.querySelector('.img-upload__form');
 var uploadFile = uploadForm.querySelector('#upload-file');
 var uploadSetup = uploadForm.querySelector('.img-upload__overlay');
-var hashtagInput = uploadForm.querySelector('.text__hashtags');
 var setupClose = uploadForm.querySelector('.img-upload__cancel');
 
 // закрытие окна с фильтрами при нажатии на ESC
@@ -228,7 +227,7 @@ var fileKeydownESCHandler = function (evt) {
   if (evt.keyCode === CODE_BUTTON_ESC) {
     evt.preventDefault();
 
-    if (hashtagInput !== evt.target) {
+    if (hashtagInput !== evt.target && hashtagCommentInput !== evt.target) {
       fileClose();
     }
   }
@@ -397,12 +396,7 @@ pin.addEventListener('mousedown', function (evt) {
 });
 
 // валидация текстовых инпутов в окне фильтра
-
-// var uploadForm = document.querySelector('.img-upload__form');
-// var uploadFile = uploadForm.querySelector('#upload-file');
-// var uploadSetup = uploadForm.querySelector('.img-upload__overlay');
-// var hashtagInput = uploadForm.querySelector('.text__hashtags');
-// var setupClose = uploadForm.querySelector('.img-upload__cancel');
+var hashtagInput = uploadForm.querySelector('.text__hashtags');
 var hashtagCommentInput = uploadForm.querySelector('.text__description');
 uploadForm.action = 'https://js.dump.academy/kekstagram';
 
