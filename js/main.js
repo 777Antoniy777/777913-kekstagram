@@ -20,6 +20,10 @@ var DESCRIPTION = [
 ];
 var NAMES = ['Артема', 'Саши', 'Маши', 'Дмитрия', 'Владимира', 'Арсения'];
 
+
+
+
+
 // функция получения рандомного значения из массива
 var getRandomValue = function (array) {
   var indexValue = Math.floor(Math.random() * (array.length - 1));
@@ -32,9 +36,13 @@ var getRandomNumber = function (min, max) {
   return indexNumber;
 };
 
+
+
+
+
 // функция вывода данных описания фотографий
 var IMAGES_COUNT = 25;
-var MIN_VALUE = 1;
+var MIN_VALUE_AVATARS = 1;
 var MAX_VALUE_AVATARS = 7;
 var MIN_VALUE_LIKES = 15;
 var MAX_VALUE_LIKES = 201;
@@ -48,7 +56,7 @@ var createComment = function () {
 
   for (var i = 0; i < getRandomNumber(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT); i++) {
     var comment = {
-      avatar: 'img/avatar-' + getRandomNumber(MIN_VALUE, MAX_VALUE_AVATARS) + '.svg',
+      avatar: 'img/avatar-' + getRandomNumber(MIN_VALUE_AVATARS, MAX_VALUE_AVATARS) + '.svg',
       message: getRandomValue(MESSAGES),
       name: getRandomValue(NAMES),
       description: getRandomValue(DESCRIPTION)
@@ -100,6 +108,16 @@ var hideComments = function () {
   }
 };
 
+
+
+
+
+
+
+
+
+
+
 // функция создания url, likes, comments
 var createImages = function () {
   var images = [];
@@ -138,6 +156,23 @@ var setImages = function (arrayImages) {
   }
 };
 
+
+
+
+
+
+
+
+
+
+// функция добавления класса hidden к тем объектам, которые это заслужили
+var addHiddenClass = function () {
+  document.querySelector('.social__comment-count').classList.add('visually-hidden');
+  document.querySelector('.comments-loader').classList.add('visually-hidden');
+};
+
+addHiddenClass();
+
 // открытие полноэкранной картинки с помощью мыши и закрытие с помощью ESC
 var callPictureClick = function (templateItem, image) {
   templateItem.addEventListener('click', function (evt) {
@@ -157,14 +192,6 @@ var callPictureEnter = function (templateItem, image) {
 };
 
 setImages(IMAGES);
-
-// функция добавления класса hidden к тем объектам, которые это заслужили
-var addHiddenClass = function () {
-  document.querySelector('.social__comment-count').classList.add('visually-hidden');
-  document.querySelector('.comments-loader').classList.add('visually-hidden');
-};
-
-addHiddenClass();
 
 // открытие и закрытие большого фото при нажатии на любое фото в галерее
 var CODE_BUTTON_ESC = 27;
@@ -189,9 +216,7 @@ var pictureOpen = function (image) {
   body.classList.add('modal-open');
   removeComments();
   setComments(image.comments);
-
   hideComments();
-
   commentInput.focus();
   document.addEventListener('keydown', pictureKeydownESCHandler);
 };
@@ -215,6 +240,21 @@ bigPictureClose.addEventListener('keydown', function (evt) {
     pictureClose();
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // редактирование фильтра изображений
 var uploadForm = document.querySelector('.img-upload__form');
@@ -268,6 +308,15 @@ setupClose.addEventListener('click', function () {
   fileClose();
 });
 
+
+
+
+
+
+
+
+
+
 // отпускание пина слайдера
 var pinLine = uploadForm.querySelector('.effect-level__line');
 var pinLineFill = uploadForm.querySelector('.effect-level__depth');
@@ -286,14 +335,6 @@ var phobos = uploadForm.querySelector('label[for=effect-phobos]');
 var heat = uploadForm.querySelector('label[for=effect-heat]');
 
 var prewiev = uploadForm.querySelector('.img-upload__preview');
-// var FILTERS = [
-//   'none',
-//   'grayscale(0)',
-//   'sepia(0)',
-//   'invert(0%)',
-//   'blur(0px)',
-//   'brightness(0.1)'
-// ];
 var FILTERS = [
   'none',
   'grayscale(1)',
@@ -303,15 +344,6 @@ var FILTERS = [
   'brightness(3)'
 ];
 
-// var CLASS_PREVIEW = 'effects__preview';
-// var FILTERS = [
-//   CLASS_PREVIEW + '--none',
-//   CLASS_PREVIEW + '--chrome',
-//   CLASS_PREVIEW + '--sepia',
-//   CLASS_PREVIEW + '--marvin',
-//   CLASS_PREVIEW + '--phobos',
-//   CLASS_PREVIEW + '--heat'
-// ];
 var FILTERS_EFFECTS;
 var LABELS = [original, chrome, sepia, marvin, phobos, heat];
 var FILTER_INDEX = 0;
@@ -328,7 +360,6 @@ var setFilterEffects = function () {
 // функция движения пина слайдера
 var getFilterEffects = function (label, filter, i) {
   label.addEventListener('click', function () {
-    // prewiev.classList.add(filter);
     prewiev.style.filter = filter;
     pin.style.left = 100 + '%';
     pinLineFill.style.width = 100 + '%';
@@ -395,6 +426,16 @@ pin.addEventListener('mousedown', function (evt) {
   document.addEventListener('mouseup', pinUpHandler);
 });
 
+
+
+
+
+
+
+
+
+
+
 // валидация текстовых инпутов в окне фильтра
 var hashtagInput = uploadForm.querySelector('.text__hashtags');
 var hashtagCommentInput = uploadForm.querySelector('.text__description');
@@ -433,6 +474,17 @@ var validateForm = function () {
     }
   });
 };
+
+
+
+
+
+
+
+
+
+
+
 
 // функция изменения масштаба
 var setScale = function () {
