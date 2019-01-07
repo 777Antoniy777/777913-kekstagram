@@ -3,8 +3,9 @@
 (function () {
 // отпускание пина слайдера
 var pinLine = window.setup.uploadForm.querySelector('.effect-level__line');
-// var pinLineFill = uploadForm.querySelector('.effect-level__depth');
-// var pin = uploadForm.querySelector('.effect-level__pin');
+var pinLineFill = window.setup.uploadForm.querySelector('.effect-level__depth');
+var pin = window.setup.uploadForm.querySelector('.effect-level__pin');
+
 var MARVIN_VALUE = 100;
 var PHOBOS_VALUE = 3;
 var HEAT_VALUE_MIN = 1;
@@ -18,14 +19,14 @@ var marvin = window.setup.uploadForm.querySelector('label[for=effect-marvin]');
 var phobos = window.setup.uploadForm.querySelector('label[for=effect-phobos]');
 var heat = window.setup.uploadForm.querySelector('label[for=effect-heat]');
 
-// var prewiev = uploadForm.querySelector('.img-upload__preview');
-// var FILTERS = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
+var prewiev = window.setup.uploadForm.querySelector('.img-upload__preview');
+var FILTERS = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
 
 var FILTERS_EFFECTS;
 var LABELS = [original, chrome, sepia, marvin, phobos, heat];
 var FILTER_INDEX = 0;
 
-// var testField = window.setup.uploadSetup.querySelector('.img-upload__effect-level');
+var testField = window.setup.uploadSetup.querySelector('.img-upload__effect-level');
 
 // подстановка массивов и переменных в функцию создания фильтров
 // var setFilterEffects = function () {

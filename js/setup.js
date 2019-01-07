@@ -3,14 +3,14 @@
 (function () {
 // редактирование фильтра изображений
 
-// var uploadForm = document.querySelector('.img-upload__form');
+var uploadForm = document.querySelector('.img-upload__form');
 var uploadFile = uploadForm.querySelector('#upload-file');
-// var uploadSetup = uploadForm.querySelector('.img-upload__overlay');
+var uploadSetup = uploadForm.querySelector('.img-upload__overlay');
 var setupClose = uploadForm.querySelector('.img-upload__cancel');
 
 // закрытие окна с фильтрами при нажатии на ESC
 var fileKeydownESCHandler = function (evt) {
-  if (evt.keyCode === CODE_BUTTON_ESC) {
+  if (evt.keyCode === window.preview.CODE_BUTTON_ESC) {
     evt.preventDefault();
 
     if (window.validity.hashtagInput !== evt.target && window.validity.hashtagCommentInput !== evt.target) {
@@ -25,7 +25,7 @@ var fileOpen = function () {
   window.validity.hashtagInput.focus();
   window.filters.setFilterEffects();
 
-  window.validateForm();
+  window.validity.validateForm();
   window.setScale();
 
   window.filters.testField.classList.add('hidden');
@@ -49,7 +49,7 @@ uploadFile.addEventListener('change', function () {
 
 // закрытие окна с фильтрами при нажатии на мышь и ENTER
 setupClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === CODE_BUTTON_ENTER) {
+  if (evt.keyCode === window.preview.CODE_BUTTON_ENTER) {
     fileClose();
   }
 });

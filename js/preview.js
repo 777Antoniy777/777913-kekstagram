@@ -27,15 +27,15 @@ var addHiddenClass = function () {
 //     });
 //   };
   
-  window.pictures.setImages(window.pictures.IMAGES);
+  window.pictures.setImages(window.pictures.createImages);
 
   // открытие и закрытие большого фото при нажатии на любое фото в галерее
 var CODE_BUTTON_ESC = 27;
 var CODE_BUTTON_ENTER = 13;
 
-var bigPictureClose = bigPictureItem.querySelector('.big-picture__cancel');
+var bigPictureClose = window.comments.bigPictureItem.querySelector('.big-picture__cancel');
 bigPictureClose.tabIndex = 0;
-var commentInput = bigPictureItem.querySelector('.social__footer-text');
+var commentInput = window.comments.bigPictureItem.querySelector('.social__footer-text');
 var body = document.querySelector('body');
 
 var pictureKeydownESCHandler = function (evt) {
@@ -46,10 +46,10 @@ var pictureKeydownESCHandler = function (evt) {
 };
 
 var pictureOpen = function (image) {
-  bigPictureItem.classList.remove('hidden');
-  bigPictureItem.querySelector('.big-picture__img img').src = image.url;
-  bigPictureItem.querySelector('.likes-count').textContent = image.likes;
-  bigPictureItem.querySelector('.comments-count').textContent = image.comments.length;
+  window.comments.bigPictureItem.classList.remove('hidden');
+  window.comments.bigPictureItem.querySelector('.big-picture__img img').src = image.url;
+  window.comments.bigPictureItem.querySelector('.likes-count').textContent = image.likes;
+  window.comments.bigPictureItem.querySelector('.comments-count').textContent = image.comments.length;
   body.classList.add('modal-open');
 
   window.comments.removeComments();
@@ -61,7 +61,7 @@ var pictureOpen = function (image) {
 };
 
 var pictureClose = function () {
-  bigPictureItem.classList.add('hidden');
+  window.comments.bigPictureItem.classList.add('hidden');
   document.removeEventListener('keydown', pictureKeydownESCHandler);
   body.classList.remove('modal-open');
 };
@@ -98,6 +98,9 @@ window.preview = {
         pictureOpen(image);
       }
     });
-  }
+  },
+
+  CODE_BUTTON_ESC: 27,
+  CODE_BUTTON_ENTER: 13
 }
 })()

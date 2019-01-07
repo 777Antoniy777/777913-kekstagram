@@ -37,6 +37,7 @@ var currentComments = commentsList.querySelectorAll('.social__comment');
 var SPACE = ' ';
 
 window.comments = {
+  bigPictureItem: document.querySelector('.big-picture'),
   // функция создания содержимого comments
   createComment: function () {
     var comments = [];

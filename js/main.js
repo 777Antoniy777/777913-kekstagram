@@ -335,14 +335,7 @@ var phobos = uploadForm.querySelector('label[for=effect-phobos]');
 var heat = uploadForm.querySelector('label[for=effect-heat]');
 
 var prewiev = uploadForm.querySelector('.img-upload__preview');
-var FILTERS = [
-  'none',
-  'grayscale(1)',
-  'sepia(1)',
-  'invert(100%)',
-  'blur(3px)',
-  'brightness(3)'
-];
+var FILTERS = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
 
 var FILTERS_EFFECTS;
 var LABELS = [original, chrome, sepia, marvin, phobos, heat];

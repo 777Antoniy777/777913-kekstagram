@@ -6,26 +6,43 @@ var MIN_VALUE_LIKES = 15;
 var MAX_VALUE_LIKES = 201;
 
 // функция создания url, likes, comments
-var createImages = function () {
-    var images = [];
+// var createImages = function () {
+//     var images = [];
   
-    for (var i = 0; i < IMAGES_COUNT; i++) {
-      var imageNumber = i + 1;
-      var newImage = {
-        url: 'photos/' + imageNumber + '.jpg',
-        likes: window.random.getRandomNumber(MIN_VALUE_LIKES, MAX_VALUE_LIKES),
-        comments: window.comments.createComment()
-      };
-      images.push(newImage);
-    }
-    return images;
-  };
+//     for (var i = 0; i < IMAGES_COUNT; i++) {
+//       var imageNumber = i + 1;
+//       var newImage = {
+//         url: 'photos/' + imageNumber + '.jpg',
+//         likes: window.random.getRandomNumber(MIN_VALUE_LIKES, MAX_VALUE_LIKES),
+//         comments: window.comments.createComment()
+//       };
+//       images.push(newImage);
+//     }
+//     return images;
+//   };
+
+  // IMAGES = createImages();
   
   // функция подставления данных в гл.стр
   var templatePicture = document.querySelector('#picture');
 
   window.pictures = {
-    IMAGES: createImages(),
+    // IMAGES: createImages(),
+    createImages: function () {
+      var images = [];
+    
+      for (var i = 0; i < IMAGES_COUNT; i++) {
+        var imageNumber = i + 1;
+        var newImage = {
+          url: 'photos/' + imageNumber + '.jpg',
+          likes: window.random.getRandomNumber(MIN_VALUE_LIKES, MAX_VALUE_LIKES),
+          comments: window.comments.createComment()
+        };
+        images.push(newImage);
+      }
+      return images;
+    },
+    
     setImages: function (arrayImages) {
       for (var i = 0; i < arrayImages.length; i++) {
         var templateItem = templatePicture.content.querySelector('.picture').cloneNode(true);
