@@ -233,7 +233,7 @@ bigPictureClose.addEventListener('click', function (evt) {
   pictureClose();
 });
 
-// закрытие полноэкранной картинки с помощью мыши
+// закрытие полноэкранной картинки с помощью ENTER
 bigPictureClose.addEventListener('keydown', function (evt) {
   if (evt.keyCode === CODE_BUTTON_ENTER) {
     evt.preventDefault();

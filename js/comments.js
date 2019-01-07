@@ -23,27 +23,11 @@
   var NAMES = ['Артема', 'Саши', 'Маши', 'Дмитрия', 'Владимира', 'Арсения'];
 
   // функция вывода данных описания фотографий
-var MIN_VALUE_AVATARS = 1;
-var MAX_VALUE_AVATARS = 7;
+  var MIN_VALUE_AVATARS = 1;
+  var MAX_VALUE_AVATARS = 7;
 
-var MIN_COMMENTS_COUNT = 5;
-var MAX_COMMENTS_COUNT = 25;
-
-// функция создания содержимого comments
-var createComment = function () {
-  var comments = [];
-
-  for (var i = 0; i < window.random.getRandomNumber(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT); i++) {
-    var comment = {
-      avatar: 'img/avatar-' + window.random.getRandomNumber(MIN_VALUE_AVATARS, MAX_VALUE_AVATARS) + '.svg',
-      message: window.random.getRandomValue(MESSAGES),
-      name: window.random.getRandomValue(NAMES),
-      description: window.random.getRandomValue(DESCRIPTION)
-    };
-    comments.push(comment);
-  }
-  return comments;
-};
+  var MIN_COMMENTS_COUNT = 5;
+  var MAX_COMMENTS_COUNT = 25;
 
 // функция подставления комментариев в выбранную фотографию
 var commentsList = bigPictureItem.querySelector('.social__comments');
@@ -52,38 +36,56 @@ var commentTemplate = commentsList.querySelector('.social__comment');
 var currentComments = commentsList.querySelectorAll('.social__comment');
 var SPACE = ' ';
 
-var setComments = function (arrayComments) {
-  for (var i = 0; i < arrayComments.length; i++) {
-    var commentsItem = commentTemplate.cloneNode(true);
+window.comments = {
+  // функция создания содержимого comments
+  createComment: function () {
+    var comments = [];
+  
+    for (var i = 0; i < window.random.getRandomNumber(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT); i++) {
+      var comment = {
+        avatar: 'img/avatar-' + window.random.getRandomNumber(MIN_VALUE_AVATARS, MAX_VALUE_AVATARS) + '.svg',
+        message: window.random.getRandomValue(MESSAGES),
+        name: window.random.getRandomValue(NAMES),
+        description: window.random.getRandomValue(DESCRIPTION)
+      };
+      comments.push(comment);
+    }
+    return comments;
+  },
+  // функция подставления комментариев в выбранную фотографию
+  setComments: function (arrayComments) {
+    for (var i = 0; i < arrayComments.length; i++) {
+      var commentsItem = commentTemplate.cloneNode(true);
+  
+      commentsItem.querySelector('.social__picture').src = arrayComments[i].avatar;
+      commentsItem.querySelector('.social__text').textContent = arrayComments[i].message;
+      commentsItem.querySelector('.social__picture').alt = 'Аватар' + SPACE + arrayComments[i].name;
+  
+      bigPictureSocial.querySelector('.social__caption').textContent = arrayComments[i].description;
+      bigPictureSocial.querySelector('.social__picture').src = arrayComments[i].avatar;
+      bigPictureSocial.querySelector('.social__picture').alt = 'Аватар' + SPACE + arrayComments[i].name;
+  
+      commentsList.appendChild(commentsItem);
+  
+      currentComments.push(commentsItem);
+    }
+  },
+  // функция удаления предыдущих комментариев
+  removeComments: function () {
 
-    commentsItem.querySelector('.social__picture').src = arrayComments[i].avatar;
-    commentsItem.querySelector('.social__text').textContent = arrayComments[i].message;
-    commentsItem.querySelector('.social__picture').alt = 'Аватар' + SPACE + arrayComments[i].name;
+    for (var i = 0; i < currentComments.length; i++) {
+      commentsList.removeChild(currentComments[i]);
+    }
+  
+    currentComments = [];
+  },
+  // функция скрытия комментариев, если их больше 5
+  hideComments: function () {
 
-    bigPictureSocial.querySelector('.social__caption').textContent = arrayComments[i].description;
-    bigPictureSocial.querySelector('.social__picture').src = arrayComments[i].avatar;
-    bigPictureSocial.querySelector('.social__picture').alt = 'Аватар' + SPACE + arrayComments[i].name;
-
-    commentsList.appendChild(commentsItem);
-
-    currentComments.push(commentsItem);
+    for (var i = 5; i < currentComments.length; i++) {
+      var hiddenComment = currentComments[i];
+      hiddenComment.style.display = 'none';
+    }
   }
-};
-
-var removeComments = function () {
-
-  for (var i = 0; i < currentComments.length; i++) {
-    commentsList.removeChild(currentComments[i]);
-  }
-
-  currentComments = [];
-};
-
-var hideComments = function () {
-
-  for (var i = 5; i < currentComments.length; i++) {
-    var hiddenComment = currentComments[i];
-    hiddenComment.style.display = 'none';
-  }
-};
+}
 })();

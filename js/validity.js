@@ -2,11 +2,12 @@
 
 (function () {
 // валидация текстовых инпутов в окне фильтра
-var hashtagInput = uploadForm.querySelector('.text__hashtags');
-var hashtagCommentInput = uploadForm.querySelector('.text__description');
-uploadForm.action = 'https://js.dump.academy/kekstagram';
 
-var validateForm = function () {
+// var hashtagInput = window.setup.uploadForm.querySelector('.text__hashtags');
+// var hashtagCommentInput = window.setup.uploadForm.querySelector('.text__description');
+window.setup.uploadForm.action = 'https://js.dump.academy/kekstagram';
+
+window.validateForm = function () {
   hashtagInput.type = 'text';
   hashtagInput.minLength = '2';
   hashtagCommentInput.maxLength = '140';
@@ -39,4 +40,9 @@ var validateForm = function () {
     }
   });
 };
+
+window.validity = {
+  hashtagInput: window.setup.uploadForm.querySelector('.text__hashtags'),
+  hashtagCommentInput: window.setup.uploadForm.querySelector('.text__description')
+}
 })()
