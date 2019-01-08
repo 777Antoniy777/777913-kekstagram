@@ -33,7 +33,7 @@
     for (var i = 0; i < LABELS.length; i++) {
       getFilterEffects(LABELS[i], FILTERS[i], i);
     }
-  }
+  };
 
   // функция движения пина слайдера
   var getFilterEffects = function (label, filter, i) {
@@ -114,5 +114,5 @@
     testField: testField,
     // функции
     setFilterEffects: setFilterEffects
-  }
-})()
+  };
+})();

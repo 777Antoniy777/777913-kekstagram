@@ -6,7 +6,7 @@
     document.querySelector('.social__comment-count').classList.add('visually-hidden');
     document.querySelector('.comments-loader').classList.add('visually-hidden');
   };
-  
+
   addHiddenClass();
 
   // открытие полноэкранной картинки с помощью мыши и закрытие с помощью ESC
@@ -77,5 +77,5 @@
     // функции
     callPictureClick: callPictureClick,
     callPictureEnter: callPictureEnter
-  }
-})()
+  };
+})();

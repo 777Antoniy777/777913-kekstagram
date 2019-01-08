@@ -60,5 +60,5 @@
     // переменные
     uploadForm: uploadForm,
     uploadSetup: uploadSetup
-  }
-})()
+  };
+})();

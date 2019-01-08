@@ -38,7 +38,7 @@
         }
       }
     });
-  }
+  };
 
   // глобальный вызов
   window.validity = {
@@ -47,5 +47,5 @@
     hashtagCommentInput: hashtagCommentInput,
     // функции
     validateForm: validateForm
-  }
-})()
+  };
+})();

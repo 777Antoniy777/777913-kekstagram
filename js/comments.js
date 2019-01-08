@@ -32,7 +32,7 @@
   // функция создания содержимого comments
   var createComment = function () {
     var comments = [];
-  
+
     for (var i = 0; i < window.random.getRandomNumber(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT); i++) {
       var comment = {
         avatar: 'img/avatar-' + window.random.getRandomNumber(MIN_VALUE_AVATARS, MAX_VALUE_AVATARS) + '.svg',
@@ -98,5 +98,5 @@
     setComments: setComments,
     removeComments: removeComments,
     hideComments: hideComments
-  }
+  };
 })();

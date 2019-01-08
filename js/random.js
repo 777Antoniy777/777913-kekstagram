@@ -1,7 +1,7 @@
 'use strict';
 
 window.random = (function () {
-  
+
   return {
     // функция получения рандомного значения из массива
     getRandomValue: function (array) {
@@ -13,5 +13,5 @@ window.random = (function () {
       var indexNumber = Math.floor(Math.random() * (max - min) + min);
       return indexNumber;
     }
-  }
-})()
+  };
+})();
