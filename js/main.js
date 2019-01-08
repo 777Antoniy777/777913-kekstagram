@@ -2,6 +2,9 @@
 
 (function () {
   // отрисовка изображений
-  // setImages(IMAGES);
-  pictures.setImages;
+  var callFunctions = function () {
+    window.pictures.setImages;
+  };
+
+  callFunctions();
 })();
