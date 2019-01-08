@@ -45,58 +45,58 @@
     return comments;
   };
 
-// функция подставления комментариев в выбранную фотографию
-var commentsList = bigPictureItem.querySelector('.social__comments');
-var bigPictureSocial = bigPictureItem.querySelector('.big-picture__social');
-var commentTemplate = commentsList.querySelector('.social__comment');
-var currentComments = commentsList.querySelectorAll('.social__comment');
-var SPACE = ' ';
+  // функция подставления комментариев в выбранную фотографию
+  var commentsList = bigPictureItem.querySelector('.social__comments');
+  var bigPictureSocial = bigPictureItem.querySelector('.big-picture__social');
+  var commentTemplate = commentsList.querySelector('.social__comment');
+  var currentComments = commentsList.querySelectorAll('.social__comment');
+  var SPACE = ' ';
 
-var setComments = function (arrayComments) {
-  for (var i = 0; i < arrayComments.length; i++) {
-    var commentsItem = commentTemplate.cloneNode(true);
+  var setComments = function (arrayComments) {
+    for (var i = 0; i < arrayComments.length; i++) {
+      var commentsItem = commentTemplate.cloneNode(true);
 
-    commentsItem.querySelector('.social__picture').src = arrayComments[i].avatar;
-    commentsItem.querySelector('.social__text').textContent = arrayComments[i].message;
-    commentsItem.querySelector('.social__picture').alt = 'Аватар' + SPACE + arrayComments[i].name;
+      commentsItem.querySelector('.social__picture').src = arrayComments[i].avatar;
+      commentsItem.querySelector('.social__text').textContent = arrayComments[i].message;
+      commentsItem.querySelector('.social__picture').alt = 'Аватар' + SPACE + arrayComments[i].name;
 
-    bigPictureSocial.querySelector('.social__caption').textContent = arrayComments[i].description;
-    bigPictureSocial.querySelector('.social__picture').src = arrayComments[i].avatar;
-    bigPictureSocial.querySelector('.social__picture').alt = 'Аватар' + SPACE + arrayComments[i].name;
+      bigPictureSocial.querySelector('.social__caption').textContent = arrayComments[i].description;
+      bigPictureSocial.querySelector('.social__picture').src = arrayComments[i].avatar;
+      bigPictureSocial.querySelector('.social__picture').alt = 'Аватар' + SPACE + arrayComments[i].name;
 
-    commentsList.appendChild(commentsItem);
+      commentsList.appendChild(commentsItem);
 
-    currentComments.push(commentsItem);
+      currentComments.push(commentsItem);
+    }
+  };
+
+  // функция удаления предыдущих комментариев
+  var removeComments = function () {
+
+    for (var i = 0; i < currentComments.length; i++) {
+      commentsList.removeChild(currentComments[i]);
+    }
+
+    currentComments = [];
+  };
+
+  // функция скрытия комментариев, если их больше 5
+  var hideComments = function () {
+
+    for (var i = 5; i < currentComments.length; i++) {
+      var hiddenComment = currentComments[i];
+      hiddenComment.style.display = 'none';
+    }
+  };
+
+  // глобальный вызов
+  window.comments = {
+    // переменные
+    bigPictureItem: bigPictureItem,
+    // функции
+    createComment: createComment,
+    setComments: setComments,
+    removeComments: removeComments,
+    hideComments: hideComments
   }
-};
-
-// функция удаления предыдущих комментариев
-var removeComments = function () {
-
-  for (var i = 0; i < currentComments.length; i++) {
-    commentsList.removeChild(currentComments[i]);
-  }
-
-  currentComments = [];
-};
-
-// функция скрытия комментариев, если их больше 5
-var hideComments = function () {
-
-  for (var i = 5; i < currentComments.length; i++) {
-    var hiddenComment = currentComments[i];
-    hiddenComment.style.display = 'none';
-  }
-};
-
-window.comments = {
-  // переменные
-  bigPictureItem: bigPictureItem,
-  // функции
-  createComment: createComment,
-  setComments: setComments,
-  removeComments: removeComments,
-  hideComments: hideComments
-}
-
 })();

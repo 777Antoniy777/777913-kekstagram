@@ -1,9 +1,8 @@
 'use strict';
 
 (function () {
-  
-// функция изменения масштаба
-var setScale = function () {
+  // функция изменения масштаба
+  var setScale = function () {
   var buttonBigger = window.setup.uploadForm.querySelector('.scale__control--bigger');
   var buttonSmaller = window.setup.uploadForm.querySelector('.scale__control--smaller');
   var buttonValue = window.setup.uploadForm.querySelector('.scale__control--value');
@@ -51,10 +50,11 @@ var setScale = function () {
   };
 
   changeButtonValue();
-};
+  };
 
-window.scale = {
-  // функции
-  setScale: setScale
-}
+  // глобальный вызов
+  window.scale = {
+    // функции
+    setScale: setScale
+  }
 })()
