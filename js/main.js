@@ -1,5 +1,5 @@
 'use strict';
-
+/* jshint ignore:start*/
 (function () {
   // отрисовка изображений
   var callFunctions = function () {
@@ -8,3 +8,4 @@
 
   callFunctions();
 })();
+/* jshint ignore:end */

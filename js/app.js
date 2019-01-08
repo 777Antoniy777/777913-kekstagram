@@ -20,10 +20,6 @@ var DESCRIPTION = [
 ];
 var NAMES = ['Артема', 'Саши', 'Маши', 'Дмитрия', 'Владимира', 'Арсения'];
 
-
-
-
-
 // функция получения рандомного значения из массива
 var getRandomValue = function (array) {
   var indexValue = Math.floor(Math.random() * (array.length - 1));
@@ -35,10 +31,6 @@ var getRandomNumber = function (min, max) {
   var indexNumber = Math.floor(Math.random() * (max - min) + min);
   return indexNumber;
 };
-
-
-
-
 
 // функция вывода данных описания фотографий
 var IMAGES_COUNT = 25;
@@ -108,16 +100,6 @@ var hideComments = function () {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
 // функция создания url, likes, comments
 var createImages = function () {
   var images = [];
@@ -155,9 +137,6 @@ var setImages = function (arrayImages) {
     pictureItem.appendChild(templateItem);
   }
 };
-
-
-
 
 // функция добавления класса hidden к тем объектам, которые это заслужили
 var addHiddenClass = function () {
@@ -235,21 +214,6 @@ bigPictureClose.addEventListener('keydown', function (evt) {
   }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // редактирование фильтра изображений
 var uploadForm = document.querySelector('.img-upload__form');
 var uploadFile = uploadForm.querySelector('#upload-file');
@@ -301,15 +265,6 @@ setupClose.addEventListener('keydown', function (evt) {
 setupClose.addEventListener('click', function () {
   fileClose();
 });
-
-
-
-
-
-
-
-
-
 
 // отпускание пина слайдера
 var pinLine = uploadForm.querySelector('.effect-level__line');
@@ -413,16 +368,6 @@ pin.addEventListener('mousedown', function (evt) {
   document.addEventListener('mouseup', pinUpHandler);
 });
 
-
-
-
-
-
-
-
-
-
-
 // валидация текстовых инпутов в окне фильтра
 var hashtagInput = uploadForm.querySelector('.text__hashtags');
 var hashtagCommentInput = uploadForm.querySelector('.text__description');
@@ -461,17 +406,6 @@ var validateForm = function () {
     }
   });
 };
-
-
-
-
-
-
-
-
-
-
-
 
 // функция изменения масштаба
 var setScale = function () {
