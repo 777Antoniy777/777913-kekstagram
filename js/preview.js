@@ -9,25 +9,26 @@ var addHiddenClass = function () {
   
   addHiddenClass();
 
-//   // открытие полноэкранной картинки с помощью мыши и закрытие с помощью ESC
-// var callPictureClick = function (templateItem, image) {
-//     templateItem.addEventListener('click', function (evt) {
-//       evt.preventDefault();
-//       pictureOpen(image);
-//     });
-//   };
+  // открытие полноэкранной картинки с помощью мыши и закрытие с помощью ESC
+  var callPictureClick = function (templateItem, image) {
+    templateItem.addEventListener('click', function (evt) {
+      evt.preventDefault();
+      pictureOpen(image);
+    });
+  };
+
+  // открытие полноэкранной картинки с помощью ENTER и закрытие с помощью ESC
+  var callPictureEnter = function (templateItem, image) {
+    templateItem.addEventListener('keydown', function (evt) {
+      window.openClose.isEnterEvent(evt, pictureOpen, image);
+      // if (evt.keyCode === CODE_BUTTON_ENTER) {
+      //   evt.preventDefault();
+      //   pictureOpen(image);
+      // }
+    });
+  };
   
-//   // открытие полноэкранной картинки с помощью ENTER и закрытие с помощью ESC
-//   var callPictureEnter = function (templateItem, image) {
-//     templateItem.addEventListener('keydown', function (evt) {
-//       if (evt.keyCode === CODE_BUTTON_ENTER) {
-//         evt.preventDefault();
-//         pictureOpen(image);
-//       }
-//     });
-//   };
-  
-  window.pictures.setImages(window.pictures.createImages);
+  // window.pictures.setImages(window.pictures.createImages);
 
   // открытие и закрытие большого фото при нажатии на любое фото в галерее
 var CODE_BUTTON_ESC = 27;
@@ -39,10 +40,11 @@ var commentInput = window.comments.bigPictureItem.querySelector('.social__footer
 var body = document.querySelector('body');
 
 var pictureKeydownESCHandler = function (evt) {
-  if (evt.keyCode === CODE_BUTTON_ESC) {
-    evt.preventDefault();
-    pictureClose();
-  }
+  // if (evt.keyCode === CODE_BUTTON_ESC) {
+  //   evt.preventDefault();
+  //   pictureClose();
+  // }
+  window.openClose.isEscEvent(evt, pictureClose);
 };
 
 var pictureOpen = function (image) {
@@ -72,35 +74,24 @@ bigPictureClose.addEventListener('click', function (evt) {
   pictureClose();
 });
 
-// закрытие полноэкранной картинки с помощью мыши
+// закрытие полноэкранной картинки с помощью ENTER
 bigPictureClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === CODE_BUTTON_ENTER) {
-    evt.preventDefault();
-    pictureClose();
-  }
+  // if (evt.keyCode === CODE_BUTTON_ENTER) {
+  //   evt.preventDefault();
+  //   pictureClose();
+  // }
+  window.openClose.isEnterEvent(evt, pictureClose);
 });
 
 window.preview = {
-  // открытие полноэкранной картинки с помощью мыши и закрытие с помощью ESC
-  callPictureClick: function (templateItem, image) {
-    templateItem.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === CODE_BUTTON_ENTER) {
-        evt.preventDefault();
-        pictureOpen(image);
-      }
-    });
-  },
-  // открытие полноэкранной картинки с помощью ENTER и закрытие с помощью ESC
-  callPictureEnter: function (templateItem, image) {
-    templateItem.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === CODE_BUTTON_ENTER) {
-        evt.preventDefault();
-        pictureOpen(image);
-      }
-    });
-  },
-
-  CODE_BUTTON_ESC: 27,
-  CODE_BUTTON_ENTER: 13
+  // переменные
+  CODE_BUTTON_ESC: CODE_BUTTON_ESC,
+  CODE_BUTTON_ENTER: CODE_BUTTON_ENTER,
+  // функции
+  callPictureClick: callPictureClick,
+  callPictureEnter: callPictureEnter
 }
+
+// window.pictures.setImages(window.pictures.createImages);
+
 })()

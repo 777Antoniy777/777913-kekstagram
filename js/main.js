@@ -159,12 +159,6 @@ var setImages = function (arrayImages) {
 
 
 
-
-
-
-
-
-
 // функция добавления класса hidden к тем объектам, которые это заслужили
 var addHiddenClass = function () {
   document.querySelector('.social__comment-count').classList.add('visually-hidden');

@@ -29,11 +29,11 @@ var FILTER_INDEX = 0;
 var testField = window.setup.uploadSetup.querySelector('.img-upload__effect-level');
 
 // подстановка массивов и переменных в функцию создания фильтров
-// var setFilterEffects = function () {
-//   for (var i = 0; i < LABELS.length; i++) {
-//     getFilterEffects(LABELS[i], FILTERS[i], i);
-//   }
-// };
+var setFilterEffects = function () {
+  for (var i = 0; i < LABELS.length; i++) {
+    getFilterEffects(LABELS[i], FILTERS[i], i);
+  }
+}
 
 // функция движения пина слайдера
 var getFilterEffects = function (label, filter, i) {
@@ -105,16 +105,13 @@ pin.addEventListener('mousedown', function (evt) {
 });
 
 window.filters = {
-  pinLineFill: window.setup.uploadForm.querySelector('.effect-level__depth'),
-  pin: window.setup.uploadForm.querySelector('.effect-level__pin'),
-  prewiev: window.setup.uploadForm.querySelector('.img-upload__preview'),
-  FILTERS: ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'],
-  testField: window.setup.uploadSetup.querySelector('.img-upload__effect-level'),
-
-  setFilterEffects: function () {
-    for (var i = 0; i < LABELS.length; i++) {
-      getFilterEffects(LABELS[i], FILTERS[i], i);
-    }
-  }
+  // переменные
+  pinLineFill: pinLineFill,
+  pin: pin,
+  prewiev: prewiev,
+  FILTERS: FILTERS,
+  testField: testField,
+  // функции
+  setFilterEffects: setFilterEffects
 }
 })()

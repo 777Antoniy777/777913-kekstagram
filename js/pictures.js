@@ -25,10 +25,9 @@ var MAX_VALUE_LIKES = 201;
   
   // функция подставления данных в гл.стр
   var templatePicture = document.querySelector('#picture');
-
-  window.pictures = {
-    // IMAGES: createImages(),
-    createImages: function () {
+    
+    // функция создания url, likes, comments
+    var createImages = function () {
       var images = [];
     
       for (var i = 0; i < IMAGES_COUNT; i++) {
@@ -41,9 +40,11 @@ var MAX_VALUE_LIKES = 201;
         images.push(newImage);
       }
       return images;
-    },
+    };
+
+    // var IMAGES = createImages();
     
-    setImages: function (arrayImages) {
+    var setImages = function (arrayImages) {
       for (var i = 0; i < arrayImages.length; i++) {
         var templateItem = templatePicture.content.querySelector('.picture').cloneNode(true);
     
@@ -51,12 +52,17 @@ var MAX_VALUE_LIKES = 201;
         templateItem.querySelector('.picture__likes').textContent = arrayImages[i].likes;
         templateItem.querySelector('.picture__comments').textContent = arrayImages[i].comments.length;
     
-        window.preview.callPictureClick(templateItem, arrayImages[i]);
-        window.preview.callPictureEnter(templateItem, arrayImages[i]);
+        // window.preview.callPictureClick(templateItem, arrayImages[i]);
+        // window.preview.callPictureEnter(templateItem, arrayImages[i]);
     
         var pictureItem = document.querySelector('.pictures');
         pictureItem.appendChild(templateItem);
       }
-    }
-  }
+    };
+
+    // window.pictures = {
+    //   setImages: createImages()
+    // }
+    setImages(createImages());
+  
 })()

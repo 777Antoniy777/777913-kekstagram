@@ -26,7 +26,7 @@ var fileOpen = function () {
   window.filters.setFilterEffects();
 
   window.validity.validateForm();
-  window.setScale();
+  window.scale.setScale();
 
   window.filters.testField.classList.add('hidden');
   window.filters.prewiev.style.filter = window.filters.FILTERS[0];
@@ -49,9 +49,7 @@ uploadFile.addEventListener('change', function () {
 
 // закрытие окна с фильтрами при нажатии на мышь и ENTER
 setupClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === window.preview.CODE_BUTTON_ENTER) {
-    fileClose();
-  }
+  window.openClose.isEnterEvent(evt, fileClose);
 });
 
 setupClose.addEventListener('click', function () {
@@ -59,7 +57,8 @@ setupClose.addEventListener('click', function () {
 });
 
 window.setup = {
-  uploadForm: document.querySelector('.img-upload__form'),
-  uploadSetup: uploadForm.querySelector('.img-upload__overlay')
+  // переменные
+  uploadForm: uploadForm,
+  uploadSetup: uploadSetup
 }
 })()
