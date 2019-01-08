@@ -1,11 +1,7 @@
 'use strict';
-/*eslint-disable */
+/* eslint-disable */
 (function () {
   // отрисовка изображений
-  var callFunctions = function () {
-    window.pictures.setImages;
-  };
-
-  callFunctions();
+    window.pictures.setImages(window.pictures.createImages());
 })();
-/*eslint-enable */
+/* eslint-enable */

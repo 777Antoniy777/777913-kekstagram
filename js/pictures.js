@@ -24,8 +24,6 @@
     return images;
   };
 
-  var IMAGES = createImages();
-
   var setImages = function (arrayImages) {
     for (var i = 0; i < arrayImages.length; i++) {
       var templateItem = templatePicture.content.querySelector('.picture').cloneNode(true);
@@ -42,9 +40,8 @@
     }
   };
 
-  // setImages(IMAGES);
-
   window.pictures = {
-    setImages: setImages(IMAGES)
+    createImages: createImages,
+    setImages: setImages
   };
 })();
