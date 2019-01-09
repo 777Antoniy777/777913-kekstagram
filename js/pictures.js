@@ -24,6 +24,8 @@
     return images;
   };
 
+  // window.backend.getDataPictures();
+
   var setImages = function (arrayImages) {
     for (var i = 0; i < arrayImages.length; i++) {
       var templateItem = templatePicture.content.querySelector('.picture').cloneNode(true);
@@ -39,6 +41,17 @@
       pictureItem.appendChild(templateItem);
     }
   };
+
+  // window.backend.getDataPictures(function (testt) {
+  //   var fragment = document.createDocumentFragment();
+    
+  //   for (var i = 0; i < testt.length; i++) {
+  //     fragment.appendChild(setImages(testt[i]));
+  //   }
+  //   similarListElement.appendChild(fragment);
+    
+  //   userDialog.querySelector('.setup-similar').classList.remove('hidden');
+  // });
 
   window.pictures = {
     createImages: createImages,

@@ -24,9 +24,10 @@
 
   var FILTERS_EFFECTS;
   var LABELS = [original, chrome, sepia, marvin, phobos, heat];
+  var labelRadioButton = window.setup.uploadForm.querySelector('.effects__radio');
   var FILTER_INDEX = 0;
 
-  var testField = window.setup.uploadSetup.querySelector('.img-upload__effect-level');
+  var effectsLevel = window.setup.uploadSetup.querySelector('.img-upload__effect-level');
 
   // подстановка массивов и переменных в функцию создания фильтров
   var setFilterEffects = function () {
@@ -44,9 +45,9 @@
       FILTER_INDEX = i;
 
       if (i === 0) {
-        testField.classList.add('hidden');
+        effectsLevel.classList.add('hidden');
       } else {
-        testField.classList.remove('hidden');
+        effectsLevel.classList.remove('hidden');
       }
     });
   };
@@ -107,11 +108,10 @@
   // глобальный вызов
   window.filters = {
     // переменные
-    pinLineFill: pinLineFill,
-    pin: pin,
     prewiev: prewiev,
     FILTERS: FILTERS,
-    testField: testField,
+    labelRadioButton: labelRadioButton,
+    effectsLevel: effectsLevel,
     // функции
     setFilterEffects: setFilterEffects
   };
