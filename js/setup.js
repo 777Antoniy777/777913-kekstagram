@@ -26,12 +26,12 @@
 
     window.validity.hashtagInput.focus();
     window.filters.setFilterEffects();
-
     window.validity.validateForm();
     window.scale.setScale();
 
     window.filters.effectsLevel.classList.add('hidden');
     window.filters.prewiev.style.filter = window.filters.FILTERS[0];
+    window.filters.pinValueInput.value = '';
     window.filters.labelRadioButton.checked = 'checked';
 
     document.addEventListener('keydown', fileKeydownESCHandler);
@@ -58,20 +58,22 @@
   });
 
   // отправка данных на сервер
-  var successHandler = function (response) {
+  var successFormHandler = function (response) {
     main.appendChild(successTemplate);
     successWrapper.style.display = 'flex';
     document.addEventListener('keydown', popupEscHandler);
+    console.log(response);
   };
 
-  var errorHandler = function (errorMessage) {
+  var errorFormHandler = function (errorMessage) {
     main.appendChild(errorTemplate);
-    successWrapper.style.display = 'flex';
+    errorWrapper.style.display = 'flex';
     document.addEventListener('keydown', popupEscHandler);
+    console.error(errorMessage);
   };
 
   uploadForm.addEventListener('submit', function (evt) {
-    window.backend.sendDataForm(new FormData(uploadForm), successHandler, errorHandler) 
+    window.backend.sendDataForm(new FormData(uploadForm), successFormHandler, errorFormHandler) 
       uploadSetup.classList.add('hidden');
       uploadFile.value = '';
       window.validity.hashtagInput.value = '';
@@ -90,7 +92,7 @@
   // закрытие успешного и неуспешного сообщения разными способами
   // ESC
   var popupEscHandler = function (evt) {
-    if (successHandler) {
+    if (successFormHandler) {
       window.openClose.isEscEvent(evt, successClose);
     }
     window.openClose.isEscEvent(evt, errorClose);
@@ -99,23 +101,23 @@
   var successClose = function () {
     successWrapper.style.display = 'none';
     document.removeEventListener('keydown', popupEscHandler);
-  }
+  };
 
   var errorClose = function () {
     errorWrapper.style.display = 'none';
     document.removeEventListener('keydown', popupEscHandler);
-  }
+  };
 
   // click на кнопку
   successButton.addEventListener('click', function (evt) {
     evt.preventDefault();
     successClose();
-  })
+  });
 
   errorButton.addEventListener('click', function (evt) {
     evt.preventDefault();
     errorClose();
-  })
+  });
 
   // click на оверлэй
   successWrapper.addEventListener('click', function (evt) {
@@ -128,10 +130,13 @@
     errorClose();
   });
   
-
   // глобальный вызов
   window.setup = {
     // переменные
+    main: main,
+    errorTemplate: errorTemplate,
+    errorButton: errorButton,
+    errorWrapper: errorWrapper,
     uploadForm: uploadForm,
     uploadSetup: uploadSetup
   };

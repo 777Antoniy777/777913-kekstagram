@@ -43,11 +43,11 @@
     window.comments.bigPictureItem.querySelector('.likes-count').textContent = image.likes;
     window.comments.bigPictureItem.querySelector('.comments-count').textContent = image.comments.length;
     body.classList.add('modal-open');
-
     window.comments.removeComments();
-    window.comments.setComments(image.comments);
-    window.comments.hideComments();
 
+    window.comments.setComments(image.comments);
+
+    window.comments.hideComments();
     commentInput.focus();
     document.addEventListener('keydown', pictureKeydownESCHandler);
   };

@@ -20,6 +20,12 @@
       onError('Произошла ошибка соединения');
     });
 
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+    });
+
+    xhr.timeout = 3000;
+
     xhr.open('POST', URL_FORM);
     xhr.send(data);
   };
@@ -41,6 +47,12 @@
     xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения');
     });
+
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+    });
+
+    xhr.timeout = 10000;
 
     xhr.send();
   };

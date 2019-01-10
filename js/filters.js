@@ -5,6 +5,7 @@
   var pinLine = window.setup.uploadForm.querySelector('.effect-level__line');
   var pinLineFill = window.setup.uploadForm.querySelector('.effect-level__depth');
   var pin = window.setup.uploadForm.querySelector('.effect-level__pin');
+  var pinValueInput = window.setup.uploadForm.querySelector('.effect-level__value'); 
 
   var MARVIN_VALUE = 100;
   var PHOBOS_VALUE = 3;
@@ -42,10 +43,12 @@
       prewiev.style.filter = filter;
       pin.style.left = 100 + '%';
       pinLineFill.style.width = 100 + '%';
+      pinValueInput.value = '100';
       FILTER_INDEX = i;
 
       if (i === 0) {
         effectsLevel.classList.add('hidden');
+        pinValueInput.value = '';
       } else {
         effectsLevel.classList.remove('hidden');
       }
@@ -74,6 +77,7 @@
       var percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth;
       var percentPhobos = pin.offsetLeft * PHOBOS_VALUE / pinLine.offsetWidth;
       var perscentHeat = (pin.offsetLeft * (HEAT_VALUE_MAX - HEAT_VALUE_MIN) / pinLine.offsetWidth) + HEAT_VALUE_MIN;
+      var perscentInputValue = pin.offsetLeft * 100 / pinLine.offsetWidth;
 
       FILTERS_EFFECTS = [
         'none',
@@ -89,10 +93,13 @@
 
       if (pin.offsetLeft < 0) {
         pin.style.left = 0 + '%';
+        pinValueInput.value = '0';
       } else if (pin.offsetLeft > pinLine.offsetWidth) {
         pin.style.left = 100 + '%';
+        pinValueInput.value = '100';
       } else {
         pin.style.left = (pin.offsetLeft - continueCoords.x) + 'px';
+        pinValueInput.value = Math.round(perscentInputValue);
       }
     };
 
@@ -112,6 +119,7 @@
     FILTERS: FILTERS,
     labelRadioButton: labelRadioButton,
     effectsLevel: effectsLevel,
+    pinValueInput: pinValueInput,
     // функции
     setFilterEffects: setFilterEffects
   };
