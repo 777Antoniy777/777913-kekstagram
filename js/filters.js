@@ -5,7 +5,7 @@
   var pinLine = window.setup.uploadForm.querySelector('.effect-level__line');
   var pinLineFill = window.setup.uploadForm.querySelector('.effect-level__depth');
   var pin = window.setup.uploadForm.querySelector('.effect-level__pin');
-  var pinValueInput = window.setup.uploadForm.querySelector('.effect-level__value'); 
+  var pinValueInput = window.setup.uploadForm.querySelector('.effect-level__value');
 
   var MARVIN_VALUE = 100;
   var PHOBOS_VALUE = 3;

@@ -58,29 +58,27 @@
   });
 
   // отправка данных на сервер
-  var successFormHandler = function (response) {
+  var successFormHandler = function () {
     main.appendChild(successTemplate);
     successWrapper.style.display = 'flex';
     document.addEventListener('keydown', popupEscHandler);
-    console.log(response);
   };
 
-  var errorFormHandler = function (errorMessage) {
+  var errorFormHandler = function () {
     main.appendChild(errorTemplate);
     errorWrapper.style.display = 'flex';
     document.addEventListener('keydown', popupEscHandler);
-    console.error(errorMessage);
   };
 
   uploadForm.addEventListener('submit', function (evt) {
-    window.backend.sendDataForm(new FormData(uploadForm), successFormHandler, errorFormHandler) 
-      uploadSetup.classList.add('hidden');
-      uploadFile.value = '';
-      window.validity.hashtagInput.value = '';
-      window.validity.hashtagCommentInput.value = '';
-      window.filters.labelRadioButton.checked = 'checked';
-    
-      evt.preventDefault();
+    window.backend.sendDataForm(new FormData(uploadForm), successFormHandler, errorFormHandler);
+    uploadSetup.classList.add('hidden');
+    uploadFile.value = '';
+    window.validity.hashtagInput.value = '';
+    window.validity.hashtagCommentInput.value = '';
+    window.filters.labelRadioButton.checked = 'checked';
+
+    evt.preventDefault();
   });
 
   var successButton = successTemplate.querySelector('.success__button');
@@ -129,7 +127,7 @@
     evt.preventDefault();
     errorClose();
   });
-  
+
   // глобальный вызов
   window.setup = {
     // переменные
