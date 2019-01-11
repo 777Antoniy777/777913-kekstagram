@@ -1,28 +1,8 @@
 'use strict';
 
 (function () {
-  var IMAGES_COUNT = 25;
-  var MIN_VALUE_LIKES = 15;
-  var MAX_VALUE_LIKES = 201;
-
   // функция подставления данных в гл.стр
   var templatePicture = document.querySelector('#picture');
-
-  // функция создания url, likes, comments
-  var createImages = function () {
-    var images = [];
-
-    for (var i = 0; i < IMAGES_COUNT; i++) {
-      var imageNumber = i + 1;
-      var newImage = {
-        url: 'photos/' + imageNumber + '.jpg',
-        likes: window.random.getRandomNumber(MIN_VALUE_LIKES, MAX_VALUE_LIKES),
-        comments: window.comments.createComment()
-      };
-      images.push(newImage);
-    }
-    return images;
-  };
 
   var setImages = function (arrayImages) {
     for (var i = 0; i < arrayImages.length; i++) {
@@ -37,11 +17,13 @@
 
       var pictureItem = document.querySelector('.pictures');
       pictureItem.appendChild(templateItem);
+
+      // console.log(templateItem);
+      // console.log(arrayImages[i]);
     }
   };
 
   window.pictures = {
-    createImages: createImages,
     setImages: setImages
   };
 })();
