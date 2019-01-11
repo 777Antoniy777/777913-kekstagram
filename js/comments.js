@@ -18,7 +18,6 @@
       commentsItem.querySelector('.social__text').textContent = arrayComments[i].message;
       commentsItem.querySelector('.social__picture').alt = 'Аватар ' + arrayComments[i].name;
 
-      // bigPictureSocial.querySelector('.social__caption').textContent = arrayComments[i].description;
       bigPictureSocial.querySelector('.social__header .social__picture').src = arrayComments[i].avatar;
       bigPictureSocial.querySelector('.social__header .social__picture').alt = 'Аватар ' + arrayComments[i].name;
 
