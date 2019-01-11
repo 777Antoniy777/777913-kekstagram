@@ -12,7 +12,7 @@
 
   // закрытие окна с фильтрами при нажатии на ESC
   var fileKeydownESCHandler = function (evt) {
-    if (evt.keyCode === window.preview.CODE_BUTTON_ESC) {
+    if (evt.keyCode === window.openClose.Keycode.CODE_BUTTON_ESC) {
       evt.preventDefault();
 
       if (window.validity.hashtagInput !== evt.target && window.validity.hashtagCommentInput !== evt.target) {
@@ -61,13 +61,13 @@
   var successFormHandler = function () {
     main.appendChild(successTemplate);
     successWrapper.style.display = 'flex';
-    document.addEventListener('keydown', popupEscHandler);
+    document.addEventListener('keydown', popupFormEscHandler);
   };
 
   var errorFormHandler = function () {
     main.appendChild(errorTemplate);
     errorWrapper.style.display = 'flex';
-    document.addEventListener('keydown', popupEscHandler);
+    document.addEventListener('keydown', popupFormEscHandler);
   };
 
   uploadForm.addEventListener('submit', function (evt) {
@@ -89,43 +89,43 @@
 
   // закрытие успешного и неуспешного сообщения разными способами
   // ESC
-  var popupEscHandler = function (evt) {
+  var popupFormEscHandler = function (evt) {
     if (successFormHandler) {
-      window.openClose.isEscEvent(evt, successClose);
+      window.openClose.isEscEvent(evt, successFormClose);
     }
-    window.openClose.isEscEvent(evt, errorClose);
+    window.openClose.isEscEvent(evt, errorFormClose);
   };
 
-  var successClose = function () {
+  var successFormClose = function () {
     successWrapper.style.display = 'none';
-    document.removeEventListener('keydown', popupEscHandler);
+    document.removeEventListener('keydown', popupFormEscHandler);
   };
 
-  var errorClose = function () {
+  var errorFormClose = function () {
     errorWrapper.style.display = 'none';
-    document.removeEventListener('keydown', popupEscHandler);
+    document.removeEventListener('keydown', popupFormEscHandler);
   };
 
   // click на кнопку
   successButton.addEventListener('click', function (evt) {
     evt.preventDefault();
-    successClose();
+    successFormClose();
   });
 
   errorButton.addEventListener('click', function (evt) {
     evt.preventDefault();
-    errorClose();
+    errorFormClose();
   });
 
   // click на оверлэй
   successWrapper.addEventListener('click', function (evt) {
     evt.preventDefault();
-    successClose();
+    successFormClose();
   });
 
   errorWrapper.addEventListener('click', function (evt) {
     evt.preventDefault();
-    errorClose();
+    errorFormClose();
   });
 
   // глобальный вызов

@@ -4,12 +4,16 @@
   var URL_FORM = 'https://js.dump.academy/kekstagram';
   var URL_PICTURES = 'https://js.dump.academy/kekstagram/data';
 
+  var Datacode = {
+    SUCCESS: 200
+  };
+
   var sendDataForm = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === Datacode.SUCCESS) {
         onLoad(xhr.response);
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -37,7 +41,7 @@
     xhr.open('GET', URL_PICTURES);
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === Datacode.SUCCESS) {
         onLoad(xhr.response);
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);

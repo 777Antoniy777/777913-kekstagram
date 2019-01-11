@@ -25,9 +25,6 @@
   };
 
   // открытие и закрытие большого фото при нажатии на любое фото в галерее
-  var CODE_BUTTON_ESC = 27;
-  var CODE_BUTTON_ENTER = 13;
-
   var bigPictureClose = window.comments.bigPictureItem.querySelector('.big-picture__cancel');
   bigPictureClose.tabIndex = 0;
   var commentInput = window.comments.bigPictureItem.querySelector('.social__footer-text');
@@ -71,9 +68,6 @@
 
   // глобальный вызов
   window.preview = {
-    // переменные
-    CODE_BUTTON_ESC: CODE_BUTTON_ESC,
-    CODE_BUTTON_ENTER: CODE_BUTTON_ENTER,
     // функции
     callPictureClick: callPictureClick,
     callPictureEnter: callPictureEnter
