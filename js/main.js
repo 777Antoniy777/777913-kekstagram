@@ -49,12 +49,20 @@
 
   filetersButtonDiscussed.addEventListener('click', function () {
     var copyDates = DATES.slice();
-    copyDates.filter(function (date, index, array) {
-      console.log(date[index].comments);
-      return date[index].comments;
-    }).forEach(function (date, index, array) {
-      console.log(date[index].comments);
-    })
+    // copyDates.filter(function (date, index, array) {
+    //   console.log(date[index].comments);
+    //   return date[index].comments;
+    // }).forEach(function (date, index, array) {
+    //   console.log(date[index].comments);
+    //   return date[index].comments;
+    // });
+
+    copyDates.forEach(function (date, index, array) {
+      console.log(array[index]);
+      // return array[i];
+    });
+
+    // window.pictures.setImages(copyDates);
   })
   //   copyDates.sort(function (left, right) {
   //     return right - left;
