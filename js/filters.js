@@ -7,10 +7,12 @@
   var pin = window.setup.uploadForm.querySelector('.effect-level__pin');
   var pinValueInput = window.setup.uploadForm.querySelector('.effect-level__value');
 
-  var MARVIN_VALUE = 100;
-  var PHOBOS_VALUE = 3;
-  var HEAT_VALUE_MIN = 1;
-  var HEAT_VALUE_MAX = 3;
+  var EffectValue = {
+    MARVIN_VALUE: 100,
+    PHOBOS_VALUE: 3,
+    HEAT_VALUE_MIN: 1,
+    HEAT_VALUE_MAX: 3
+  };
 
   // создание фильтров
   var original = window.setup.uploadForm.querySelector('label[for=effect-none]');
@@ -74,9 +76,9 @@
       };
 
       var percentGraySepia = pin.offsetLeft / pinLine.offsetWidth;
-      var percentMarvin = pin.offsetLeft * MARVIN_VALUE / pinLine.offsetWidth;
-      var percentPhobos = pin.offsetLeft * PHOBOS_VALUE / pinLine.offsetWidth;
-      var perscentHeat = (pin.offsetLeft * (HEAT_VALUE_MAX - HEAT_VALUE_MIN) / pinLine.offsetWidth) + HEAT_VALUE_MIN;
+      var percentMarvin = pin.offsetLeft * EffectValue.MARVIN_VALUE / pinLine.offsetWidth;
+      var percentPhobos = pin.offsetLeft * EffectValue.PHOBOS_VALUE / pinLine.offsetWidth;
+      var perscentHeat = (pin.offsetLeft * (EffectValue.HEAT_VALUE_MAX - EffectValue.HEAT_VALUE_MIN) / pinLine.offsetWidth) + EffectValue.HEAT_VALUE_MIN;
       var perscentInputValue = pin.offsetLeft * 100 / pinLine.offsetWidth;
 
       FILTERS_EFFECTS = [
