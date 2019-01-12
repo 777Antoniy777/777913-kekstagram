@@ -5,11 +5,12 @@
   var filtersWrapper = document.querySelector('.img-filters');
 
   var successPictureHandler = function (response) {
-    DATES.push(response);
+    DATES = response;
     window.pictures.setImages(response);
     filtersWrapper.classList.remove('img-filters--inactive');
+    
+    console.log(DATES);
   }
-  console.log(DATES);
 
   var errorPictureHandler = function (errorMessage) {
     window.setup.main.appendChild(window.setup.errorTemplate);
@@ -47,27 +48,33 @@
   var filetersButtons = filtersWrapper.querySelectorAll('.img-filters__button');
   var filetersButtonDiscussed = filtersWrapper.querySelector('#filter-discussed');
 
+  var removeDate = function () {
+    var test_one = document.querySelector('.pictures');
+    var test = document.querySelectorAll('.pictures .picture');
+    console.log(test_one, test);
+
+    DATES.forEach(function (date, index, array) {
+      test_one.removeChild(test[index]);
+
+      array = [];
+    });
+  };
+
   filetersButtonDiscussed.addEventListener('click', function () {
     var copyDates = DATES.slice();
-    // copyDates.filter(function (date, index, array) {
-    //   console.log(date[index].comments);
-    //   return date[index].comments;
-    // }).forEach(function (date, index, array) {
-    //   console.log(date[index].comments);
-    //   return date[index].comments;
-    // });
 
-    copyDates.forEach(function (date, index, array) {
-      console.log(array[index]);
-      // return array[i];
+    var similarImages = copyDates.sort(function (left, right) {
+      if (left.comments.length < right.comments.length) {
+        return 1;
+      } else if (left.comments.length > right.comments.length) {
+        return -1;
+      } else if (left.likes > right.likes) {
+        return -1;
+      } 
     });
 
-    // window.pictures.setImages(copyDates);
-  })
-  //   copyDates.sort(function (left, right) {
-  //     return right - left;
-  //   });
-  //   console.log(copyDates);
-  // });
+    removeDate();
+    window.pictures.setImages(similarImages);
+  });
 
 })();
