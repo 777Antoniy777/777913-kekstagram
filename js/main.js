@@ -44,26 +44,48 @@
     errorPictureClose();
   });
 
+
+
+
   // применение фильтров для галереи
-  var filetersButtons = filtersWrapper.querySelectorAll('.img-filters__button');
-  var filetersButtonDiscussed = filtersWrapper.querySelector('#filter-discussed');
+  var filtersButtons = filtersWrapper.querySelectorAll('.img-filters__button');
+  var filtersButtonDiscussed = filtersWrapper.querySelector('#filter-discussed');
+  var filtersButtonNew = filtersWrapper.querySelector('#filter-new');
+  var filtersButtonPopular = filtersWrapper.querySelector('#filter-popular');
+  // var copyDates = DATES.slice();
 
   var removeDate = function () {
     var test_one = document.querySelector('.pictures');
-    var test = document.querySelectorAll('.pictures .picture');
-    console.log(test_one, test);
+    var test_two = document.querySelectorAll('.pictures .picture');
+    console.log(test_one, test_two);
 
     DATES.forEach(function (date, index, array) {
-      test_one.removeChild(test[index]);
+      test_one.removeChild(test_two[index]);
 
       array = [];
     });
   };
 
-  filetersButtonDiscussed.addEventListener('click', function () {
+  var addActiveClass = function (param1, param2, param3) {
+    param1.classList.add('img-filters__button--active');
+    param3.classList.remove('img-filters__button--active') || param2.classList.remove('img-filters__button--active'); 
+  };
+
+  // фильтр по популярным(изначальный)
+  filtersButtonPopular.addEventListener('click', function () {
+    addActiveClass(filtersButtonPopular, filtersButtonDiscussed, filtersButtonNew);
+    removeDate();
+    window.pictures.setImages(DATES);
+  });
+
+
+  // фильтр по комментариям
+  filtersButtonDiscussed.addEventListener('click', function () {
     var copyDates = DATES.slice();
 
-    var similarImages = copyDates.sort(function (left, right) {
+    addActiveClass(filtersButtonDiscussed, filtersButtonNew, filtersButtonPopular);
+
+    var discussedImages = copyDates.sort(function (left, right) {
       if (left.comments.length < right.comments.length) {
         return 1;
       } else if (left.comments.length > right.comments.length) {
@@ -74,7 +96,26 @@
     });
 
     removeDate();
-    window.pictures.setImages(similarImages);
+    window.pictures.setImages(discussedImages);
+  });
+
+  // фильтр по новинкам
+  filtersButtonNew.addEventListener('click', function () {
+
+    addActiveClass(filtersButtonNew, filtersButtonDiscussed, filtersButtonPopular);
+
+    var newImages = function () {
+      var arrayRandomPictures = [];
+
+      for (var i = 0; i < 10; i++) {
+        var randomPicture = window.random.getRandomValue(DATES);
+        arrayRandomPictures.push(randomPicture);
+      }
+      return arrayRandomPictures;
+    }
+
+    removeDate();
+    console.log(window.pictures.setImages(newImages()));
   });
 
 })();
