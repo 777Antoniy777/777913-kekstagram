@@ -69,7 +69,23 @@
   var clickPopularHandler = function () {
     addActiveClass(filtersButtonPopular, filtersButtonDiscussed, filtersButtonNew);
     removeDate();
-    window.pictures.setImages(DATES);
+
+    // устранение дребезга 
+    var lastTimeout; 
+    var clickDebounceHandler = function () {
+     
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+
+      lastTimeout = window.setTimeout(function () {
+        window.pictures.setImages(DATES);
+      }, 3000);
+    };
+
+    clickDebounceHandler();
+
+    // window.pictures.setImages(DATES);
   };
 
   // фильтр по комментариям
@@ -89,7 +105,23 @@
     });
 
     removeDate();
-    window.pictures.setImages(discussedImages);
+
+    // устранение дребезга 
+    var lastTimeout; 
+    var clickDebounceHandler = function () {
+     
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+
+      lastTimeout = window.setTimeout(function () {
+        window.pictures.setImages(discussedImages);
+      }, 3000);
+    };
+
+    clickDebounceHandler();
+
+    // window.pictures.setImages(discussedImages);
   };
 
   // фильтр по новинкам
@@ -111,30 +143,44 @@
     };
 
     var newRandomImages = newImages();
-
     removeDate();
-    window.pictures.setImages(newRandomImages);
+
+    // устранение дребезга 
+    var lastTimeout; 
+    var clickDebounceHandler = function () {
+     
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+
+      lastTimeout = window.setTimeout(function () {
+        window.pictures.setImages(newRandomImages);
+      }, 3000);
+    };
+
+    clickDebounceHandler();
+    // window.pictures.setImages(newRandomImages);
 };
 
-// устранение дребезга 
-var lastTimeout; 
-var clickDebounceHandler = function () {
-  return function () {
-    if (lastTimeout) {
-      window.clearTimeout(lastTimeout);
-    }
+// // устранение дребезга 
+// var lastTimeout; 
+// var clickDebounceHandler = function () {
+//   return function () {
+//     if (lastTimeout) {
+//       window.clearTimeout(lastTimeout);
+//     }
 
-    lastTimeout = window.setTimeout(function () {
-      if (filtersButtonNew) {
-        clickNowHandler();
-      } 
-    }, 3000);
-  };
-}
+//     lastTimeout = window.setTimeout(function () {
+//       if (filtersButtonNew) {
+//         clickNowHandler();
+//       } 
+//     }, 3000);
+//   };
+// }
 
   // вызовы листенеров отрисовки фильтров
   filtersButtonPopular.addEventListener('click', clickPopularHandler);
   filtersButtonDiscussed.addEventListener('click', clickDiscussedHandler);
-  filtersButtonNew.addEventListener('click', clickDebounceHandler(clickNowHandler));
+  filtersButtonNew.addEventListener('click', clickNowHandler);
   
 })();
