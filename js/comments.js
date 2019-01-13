@@ -2,7 +2,6 @@
 
 (function () {
   var bigPictureItem = document.querySelector('.big-picture');
-  // bigPictureItem.classList.remove('hidden');
 
   // функция подставления комментариев в выбранную фотографию
   var commentsList = bigPictureItem.querySelector('.social__comments');

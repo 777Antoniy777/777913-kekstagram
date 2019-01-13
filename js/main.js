@@ -49,6 +49,6 @@
     errorPictureHandler: errorPictureHandler,
 
     pictures: pictures,
-    filtersWrapper: filtersWrapper
+    // filtersWrapper: filtersWrapper
   };
 })();

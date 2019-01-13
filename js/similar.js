@@ -1,10 +1,13 @@
 'use strict';
 
 (function() {
+  var DEBOUNCE_INTERVAL = 500;
+
   // применение фильтров для галереи
-  var filtersButtonDiscussed = window.main.filtersWrapper.querySelector('#filter-discussed');
-  var filtersButtonNew = window.main.filtersWrapper.querySelector('#filter-new');
-  var filtersButtonPopular = window.main.filtersWrapper.querySelector('#filter-popular');
+  var filtersWrapper = document.querySelector('.img-filters');
+  var filtersButtonDiscussed = filtersWrapper.querySelector('#filter-discussed');
+  var filtersButtonNew = filtersWrapper.querySelector('#filter-new');
+  var filtersButtonPopular = filtersWrapper.querySelector('#filter-popular');
 
   var removeDate = function () {
     var dataPictures = document.querySelectorAll('.pictures .picture');
@@ -21,8 +24,6 @@
 
   // устранение дребезга 
   var lastTimeout; 
-  var DEBOUNCE_INTERVAL = 500;
-
 
   var debounceClickHandler = function (cb) {
     if (lastTimeout) {
