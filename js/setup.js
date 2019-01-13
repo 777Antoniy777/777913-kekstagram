@@ -83,7 +83,6 @@
 
   var successButton = successTemplate.querySelector('.success__button');
   var errorButton = errorTemplate.querySelector('.error__button');
-  // var errorButtons = errorTemplate.querySelectorAll('.error__button');
   var successWrapper = successTemplate.querySelector('.success');
   var errorWrapper = errorTemplate.querySelector('.error');
 
