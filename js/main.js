@@ -10,11 +10,10 @@
     filtersWrapper.classList.remove('img-filters--inactive');
   };
 
-  var errorPictureHandler = function (errorMessage) {
+  var errorPictureHandler = function () {
     window.setup.main.appendChild(window.setup.errorTemplate);
     window.setup.errorWrapper.style.display = 'flex';
     document.addEventListener('keydown', popupPictureEscHandler);
-    console.error(errorMessage);
   };
 
   window.backend.getDataPictures(successPictureHandler, errorPictureHandler);
@@ -22,7 +21,7 @@
   // закрытие неуспешного сообщения разными способами
   // ESC
   var popupPictureEscHandler = function (evt) {
-    window.openClose.isEscEvent(evt, errorClose);
+    window.openClose.isEscEvent(evt, errorPictureClose);
   };
 
   var errorPictureClose = function () {

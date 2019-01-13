@@ -3,7 +3,7 @@
 (function () {
   // функция подставления данных в гл.стр
   var templatePicture = document.querySelector('#picture');
-  var pictureItem  = document.querySelector('.pictures');
+  var pictureItem = document.querySelector('.pictures');
 
   var setImages = function (arrayImages) {
     for (var i = 0; i < arrayImages.length; i++) {
@@ -21,7 +21,7 @@
     }
   };
 
-  // глобальный вызов 
+  // глобальный вызов
   window.pictures = {
     // переменные
     pictureItem: pictureItem,

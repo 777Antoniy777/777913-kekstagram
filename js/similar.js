@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   var DEBOUNCE_INTERVAL = 500;
 
   // применение фильтров для галереи
@@ -12,18 +12,19 @@
   var removeDate = function () {
     var dataPictures = document.querySelectorAll('.pictures .picture');
 
-    dataPictures.forEach(function (picture, index, array) {
+    dataPictures.forEach(function (picture) {
       window.pictures.pictureItem.removeChild(picture);
     });
   };
 
   var addActiveClass = function (buttonOne, buttonTwo, buttonThree) {
     buttonOne.classList.add('img-filters__button--active');
-    buttonTwo.classList.remove('img-filters__button--active') || buttonThree.classList.remove('img-filters__button--active'); 
+    buttonTwo.classList.remove('img-filters__button--active');
+    buttonThree.classList.remove('img-filters__button--active');
   };
 
-  // устранение дребезга 
-  var lastTimeout; 
+  // устранение дребезга
+  var lastTimeout;
 
   var debounceClickHandler = function (cb) {
     if (lastTimeout) {
@@ -56,7 +57,7 @@
         return -1;
       } else if (left.likes > right.likes) {
         return -1;
-      } 
+      }
     });
 
     removeDate();
@@ -65,7 +66,7 @@
   };
 
   // фильтр по новинкам
-  var nowClickHandler =  function (evt) {
+  var nowClickHandler = function (evt) {
     addActiveClass(filtersButtonNew, filtersButtonDiscussed, filtersButtonPopular);
 
     var newImages = function () {
@@ -78,7 +79,8 @@
 
         copyDates.splice(indexRandomPicture, 1);
         arrayRandomPictures.push(randomPicture);
-      };
+      }
+      
       return arrayRandomPictures;
     };
 
