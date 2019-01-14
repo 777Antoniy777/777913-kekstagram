@@ -1,34 +1,33 @@
 'use strict';
+
 (function () {
   // получение данных с сервера
-  var DATES = [];
+  var pictures = [];
   var filtersWrapper = document.querySelector('.img-filters');
 
   var successPictureHandler = function (response) {
-    DATES.push(response);
+    window.main.pictures = response;
     window.pictures.setImages(response);
     filtersWrapper.classList.remove('img-filters--inactive');
-  }
-  console.log(DATES);
+  };
 
-  var errorPictureHandler = function (errorMessage) {
+  var errorPictureHandler = function () {
     window.setup.main.appendChild(window.setup.errorTemplate);
     window.setup.errorWrapper.style.display = 'flex';
-    document.addEventListener('keydown', popupPictureEscHandler);
-    console.error(errorMessage);
+    document.addEventListener('keydown', function (evt) {
+      window.openClose.isEscEvent(evt, errorPictureClose);
+    });
   };
 
   window.backend.getDataPictures(successPictureHandler, errorPictureHandler);
 
   // закрытие неуспешного сообщения разными способами
   // ESC
-  var popupPictureEscHandler = function (evt) {
-    window.openClose.isEscEvent(evt, errorClose);
-  };
-
   var errorPictureClose = function () {
     window.setup.errorWrapper.style.display = 'none';
-    document.removeEventListener('keydown', popupPictureEscHandler);
+    document.removeEventListener('keydown', function (evt) {
+      window.openClose.isEscEvent(evt, errorPictureClose);
+    });
   };
 
   // click на кнопку
@@ -43,31 +42,9 @@
     errorPictureClose();
   });
 
-  // применение фильтров для галереи
-  var filetersButtons = filtersWrapper.querySelectorAll('.img-filters__button');
-  var filetersButtonDiscussed = filtersWrapper.querySelector('#filter-discussed');
-
-  filetersButtonDiscussed.addEventListener('click', function () {
-    var copyDates = DATES.slice();
-    // copyDates.filter(function (date, index, array) {
-    //   console.log(date[index].comments);
-    //   return date[index].comments;
-    // }).forEach(function (date, index, array) {
-    //   console.log(date[index].comments);
-    //   return date[index].comments;
-    // });
-
-    copyDates.forEach(function (date, index, array) {
-      console.log(array[index]);
-      // return array[i];
-    });
-
-    // window.pictures.setImages(copyDates);
-  })
-  //   copyDates.sort(function (left, right) {
-  //     return right - left;
-  //   });
-  //   console.log(copyDates);
-  // });
-
+  // глобальный вызов
+  window.main = {
+    // переменные
+    pictures: pictures
+  };
 })();

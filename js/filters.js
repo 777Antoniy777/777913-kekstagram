@@ -2,10 +2,8 @@
 
 (function () {
   // отпускание пина слайдера
-  var pinLine = window.setup.uploadForm.querySelector('.effect-level__line');
-  var pinLineFill = window.setup.uploadForm.querySelector('.effect-level__depth');
-  var pin = window.setup.uploadForm.querySelector('.effect-level__pin');
-  var pinValueInput = window.setup.uploadForm.querySelector('.effect-level__value');
+  var FILTERS = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
+  var FILTER_INDEX = 0;
 
   var EffectValue = {
     MARVIN_VALUE: 100,
@@ -13,6 +11,11 @@
     HEAT_VALUE_MIN: 1,
     HEAT_VALUE_MAX: 3
   };
+
+  var pinLine = window.setup.uploadForm.querySelector('.effect-level__line');
+  var pinLineFill = window.setup.uploadForm.querySelector('.effect-level__depth');
+  var pin = window.setup.uploadForm.querySelector('.effect-level__pin');
+  var pinValueInput = window.setup.uploadForm.querySelector('.effect-level__value');
 
   // создание фильтров
   var original = window.setup.uploadForm.querySelector('label[for=effect-none]');
@@ -23,19 +26,15 @@
   var heat = window.setup.uploadForm.querySelector('label[for=effect-heat]');
 
   var prewiev = window.setup.uploadForm.querySelector('.img-upload__preview');
-  var FILTERS = ['none', 'grayscale(1)', 'sepia(1)', 'invert(100%)', 'blur(3px)', 'brightness(3)'];
 
-  var FILTERS_EFFECTS;
-  var LABELS = [original, chrome, sepia, marvin, phobos, heat];
+  var labels = [original, chrome, sepia, marvin, phobos, heat];
   var labelRadioButton = window.setup.uploadForm.querySelector('.effects__radio');
-  var FILTER_INDEX = 0;
-
   var effectsLevel = window.setup.uploadSetup.querySelector('.img-upload__effect-level');
 
   // подстановка массивов и переменных в функцию создания фильтров
   var setFilterEffects = function () {
-    for (var i = 0; i < LABELS.length; i++) {
-      getFilterEffects(LABELS[i], FILTERS[i], i);
+    for (var i = 0; i < labels.length; i++) {
+      getFilterEffects(labels[i], FILTERS[i], i);
     }
   };
 
@@ -81,7 +80,7 @@
       var perscentHeat = (pin.offsetLeft * (EffectValue.HEAT_VALUE_MAX - EffectValue.HEAT_VALUE_MIN) / pinLine.offsetWidth) + EffectValue.HEAT_VALUE_MIN;
       var perscentInputValue = pin.offsetLeft * 100 / pinLine.offsetWidth;
 
-      FILTERS_EFFECTS = [
+      var filtersEffects = [
         'none',
         'grayscale(' + percentGraySepia + ')',
         'sepia(' + percentGraySepia + ')',
@@ -90,7 +89,7 @@
         'brightness(' + perscentHeat + ')'
       ];
 
-      prewiev.style.filter = FILTERS_EFFECTS[FILTER_INDEX];
+      prewiev.style.filter = filtersEffects[FILTER_INDEX];
       pinLineFill.style.width = (pin.offsetLeft - continueCoords.x) + 'px';
 
       if (pin.offsetLeft < 0) {

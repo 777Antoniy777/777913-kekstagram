@@ -1,42 +1,21 @@
 'use strict';
 
 (function () {
+  var DEFAULT_SCALE_INDEX = 3;
+  var VALUE_MAX_LENGTH = 4;
+
   // функция изменения масштаба
+  var buttonBigger = window.setup.uploadForm.querySelector('.scale__control--bigger');
+  var buttonSmaller = window.setup.uploadForm.querySelector('.scale__control--smaller');
+  var buttonValue = window.setup.uploadForm.querySelector('.scale__control--value');
+  var scaleValues = [25, 50, 75, 100];
+
   var setScale = function () {
-    var buttonBigger = window.setup.uploadForm.querySelector('.scale__control--bigger');
-    var buttonSmaller = window.setup.uploadForm.querySelector('.scale__control--smaller');
-    var buttonValue = window.setup.uploadForm.querySelector('.scale__control--value');
+    var scaleValueIndex = DEFAULT_SCALE_INDEX;
     buttonValue.readOnly = false;
     buttonValue.value = 100 + '%';
     window.filters.prewiev.style.transform = 'scale(1)';
-    buttonValue.maxLength = 4;
-
-    var scaleValues = [25, 50, 75, 100];
-    var scaleValueIndex = 3;
-
-    buttonSmaller.addEventListener('click', function () {
-      if (scaleValueIndex === scaleValues.length - 4) {
-        buttonValue.value = 25 + '%';
-        window.filters.prewiev.style.transform = 'scale(' + 25 / 100 + ')';
-      } else {
-        scaleValueIndex--;
-      }
-
-      buttonValue.value = scaleValues[scaleValueIndex] + '%';
-      window.filters.prewiev.style.transform = 'scale(' + scaleValues[scaleValueIndex] / 100 + ')';
-    });
-
-    buttonBigger.addEventListener('click', function () {
-      if (scaleValueIndex === scaleValues.length - 1) {
-        buttonValue.value = 100 + '%';
-        window.filters.prewiev.style.transform = 'scale(' + 100 / 100 + ')';
-      } else {
-        scaleValueIndex++;
-      }
-
-      buttonValue.value = scaleValues[scaleValueIndex] + '%';
-      window.filters.prewiev.style.transform = 'scale(' + scaleValues[scaleValueIndex] / 100 + ')';
-    });
+    buttonValue.maxLength = VALUE_MAX_LENGTH;
 
     var changeButtonValue = function () {
       buttonValue.addEventListener('input', function (evt) {
@@ -50,6 +29,26 @@
     };
 
     changeButtonValue();
+
+    var changleScale = function (newIndex) {
+
+      if (newIndex >= 0 && newIndex < scaleValues.length) {
+        scaleValueIndex = newIndex;
+      }
+
+      var value = scaleValues[scaleValueIndex];
+
+      buttonValue.value = value + '%';
+      window.filters.prewiev.style.transform = 'scale(' + value / 100 + ')';
+    };
+
+    buttonSmaller.addEventListener('click', function () {
+      changleScale(scaleValueIndex - 1);
+    });
+
+    buttonBigger.addEventListener('click', function () {
+      changleScale(scaleValueIndex + 1);
+    });
   };
 
   // глобальный вызов

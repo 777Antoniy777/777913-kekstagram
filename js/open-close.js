@@ -4,7 +4,7 @@
   var Keycode = {
     CODE_BUTTON_ESC: 27,
     CODE_BUTTON_ENTER: 13
-  }
+  };
 
   var isEscEvent = function (evt, action, actions) {
     if (evt.keyCode === Keycode.CODE_BUTTON_ESC) {
