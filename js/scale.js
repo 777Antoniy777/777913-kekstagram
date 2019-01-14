@@ -2,7 +2,7 @@
 
 (function () {
   var DEFAULT_SCALE_INDEX = 3;
-  
+
   // функция изменения масштаба
   var buttonBigger = window.setup.uploadForm.querySelector('.scale__control--bigger');
   var buttonSmaller = window.setup.uploadForm.querySelector('.scale__control--smaller');
@@ -28,24 +28,24 @@
 
     changeButtonValue();
 
-    var changleScale = function(newIndex) {
+    var changleScale = function (newIndex) {
 
       if (newIndex >= 0 && newIndex < scaleValues.length) {
         DEFAULT_SCALE_INDEX = newIndex;
       }
-  
+
       var value = scaleValues[DEFAULT_SCALE_INDEX];
-      
+
       buttonValue.value = value + '%';
       window.filters.prewiev.style.transform = 'scale(' + value / 100 + ')';
-    }
-  
+    };
+
     buttonSmaller.addEventListener('click', function () {
-      changleScale(DEFAULT_SCALE_INDEX - 1)
+      changleScale(DEFAULT_SCALE_INDEX - 1);
     });
-  
+
     buttonBigger.addEventListener('click', function () {
-      changleScale(DEFAULT_SCALE_INDEX + 1)
+      changleScale(DEFAULT_SCALE_INDEX + 1);
     });
   };
 

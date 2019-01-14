@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
   // получение данных с сервера
   var pictures = [];

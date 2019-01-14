@@ -20,9 +20,10 @@
 
   var addActiveClass = function (newActiveButton) {
     var prevActiveButton = document.querySelector('.img-filters__button--active');
-      if (prevActiveButton) {
-        prevActiveButton.classList.remove('img-filters__button--active');
-      }
+
+    if (prevActiveButton) {
+      prevActiveButton.classList.remove('img-filters__button--active');
+    }
 
     newActiveButton.classList.add('img-filters__button--active');
   };
@@ -55,15 +56,19 @@
     addActiveClass(filtersButtonDiscussed);
 
     var discussedImages = copyDates.sort(function (left, right) {
+      var sortValue = 0;
+
       if (left.comments.length < right.comments.length) {
-        return 1;
-      } 
-      if (left.comments.length > right.comments.length) {
-        return -1;
-      } 
-      if (left.likes > right.likes) {
-        return -1;
+        sortValue += 1;
       }
+      if (left.comments.length > right.comments.length) {
+        sortValue += -1;
+      }
+      if (left.likes > right.likes) {
+        sortValue += -1;
+      }
+
+      return sortValue;
     });
 
     removeDate();
