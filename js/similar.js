@@ -65,7 +65,7 @@
         sortValue += -1;
       }
       if (left.likes > right.likes) {
-        sortValue += -1;
+        sortValue -= 1;
       }
 
       return sortValue;
