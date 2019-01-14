@@ -2,6 +2,7 @@
 
 (function () {
   var DEBOUNCE_INTERVAL = 500;
+  var POPULAR_INDEX_PICTURE = 10;
 
   // применение фильтров для галереи
   var filtersWrapper = document.querySelector('.img-filters');
@@ -17,10 +18,13 @@
     });
   };
 
-  var addActiveClass = function (buttonOne, buttonTwo, buttonThree) {
-    buttonOne.classList.add('img-filters__button--active');
-    buttonTwo.classList.remove('img-filters__button--active');
-    buttonThree.classList.remove('img-filters__button--active');
+  var addActiveClass = function (newActiveButton) {
+    var prevActiveButton = document.querySelector('.img-filters__button--active');
+      if (prevActiveButton) {
+        prevActiveButton.classList.remove('img-filters__button--active');
+      }
+
+    newActiveButton.classList.add('img-filters__button--active');
   };
 
   // устранение дребезга
@@ -38,7 +42,7 @@
 
   // фильтр по популярным(изначальный)
   var popularClickHandler = function (evt) {
-    addActiveClass(filtersButtonPopular, filtersButtonDiscussed, filtersButtonNew);
+    addActiveClass(filtersButtonPopular);
     removeDate();
     debounceClickHandler(window.main.pictures);
     evt.stopPropagation();
@@ -48,14 +52,16 @@
   var discussedClickHandler = function (evt) {
     var copyDates = window.main.pictures.slice();
 
-    addActiveClass(filtersButtonDiscussed, filtersButtonNew, filtersButtonPopular);
+    addActiveClass(filtersButtonDiscussed);
 
     var discussedImages = copyDates.sort(function (left, right) {
       if (left.comments.length < right.comments.length) {
         return 1;
-      } else if (left.comments.length > right.comments.length) {
+      } 
+      if (left.comments.length > right.comments.length) {
         return -1;
-      } else if (left.likes > right.likes) {
+      } 
+      if (left.likes > right.likes) {
         return -1;
       }
     });
@@ -67,20 +73,20 @@
 
   // фильтр по новинкам
   var nowClickHandler = function (evt) {
-    addActiveClass(filtersButtonNew, filtersButtonDiscussed, filtersButtonPopular);
+    addActiveClass(filtersButtonNew);
 
     var newImages = function () {
       var arrayRandomPictures = [];
       var copyDates = window.main.pictures.slice();
 
-      for (var i = 0; i < 10; i++) {
+      for (var i = 0; i < POPULAR_INDEX_PICTURE; i++) {
         var indexRandomPicture = Math.floor(Math.random() * (copyDates.length - 1));
         var randomPicture = copyDates[indexRandomPicture];
 
         copyDates.splice(indexRandomPicture, 1);
         arrayRandomPictures.push(randomPicture);
       }
-      
+
       return arrayRandomPictures;
     };
 

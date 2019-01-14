@@ -13,20 +13,20 @@
   var errorPictureHandler = function () {
     window.setup.main.appendChild(window.setup.errorTemplate);
     window.setup.errorWrapper.style.display = 'flex';
-    document.addEventListener('keydown', popupPictureEscHandler);
+    document.addEventListener('keydown', function (evt) {
+      window.openClose.isEscEvent(evt, errorPictureClose);
+    });
   };
 
   window.backend.getDataPictures(successPictureHandler, errorPictureHandler);
 
   // закрытие неуспешного сообщения разными способами
   // ESC
-  var popupPictureEscHandler = function (evt) {
-    window.openClose.isEscEvent(evt, errorPictureClose);
-  };
-
   var errorPictureClose = function () {
     window.setup.errorWrapper.style.display = 'none';
-    document.removeEventListener('keydown', popupPictureEscHandler);
+    document.removeEventListener('keydown', function (evt) {
+      window.openClose.isEscEvent(evt, errorPictureClose);
+    });
   };
 
   // click на кнопку
@@ -44,10 +44,6 @@
   // глобальный вызов
   window.main = {
     // переменные
-    successPictureHandler: successPictureHandler,
-    errorPictureHandler: errorPictureHandler,
-
-    pictures: pictures,
-    // filtersWrapper: filtersWrapper
+    pictures: pictures
   };
 })();

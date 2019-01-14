@@ -29,6 +29,8 @@
     window.validity.validateForm();
     window.scale.setScale();
 
+    window.validity.hashtagInput.setCustomValidity('');
+    window.validity.hashtagInput.style.border = '3px solid white';
     window.filters.effectsLevel.classList.add('hidden');
     window.filters.prewiev.style.filter = window.filters.FILTERS[0];
     window.filters.pinValueInput.value = '';
@@ -61,13 +63,17 @@
   var successFormHandler = function () {
     main.appendChild(successTemplate);
     successWrapper.style.display = 'flex';
-    document.addEventListener('keydown', popupFormEscHandler);
+    document.addEventListener('keydown', function (evt) {
+      window.openClose.isEscEvent(evt, successFormClose);
+    });
   };
 
   var errorFormHandler = function () {
     main.appendChild(errorTemplate);
     errorWrapper.style.display = 'flex';
-    document.addEventListener('keydown', popupFormEscHandler);
+    document.addEventListener('keydown', function (evt) {
+      window.openClose.isEscEvent(evt, errorFormClose);
+    });
   };
 
   uploadForm.addEventListener('submit', function (evt) {
@@ -88,21 +94,18 @@
 
   // закрытие успешного и неуспешного сообщения разными способами
   // ESC
-  var popupFormEscHandler = function (evt) {
-    if (successFormHandler) {
-      window.openClose.isEscEvent(evt, successFormClose);
-    }
-    window.openClose.isEscEvent(evt, errorFormClose);
-  };
-
   var successFormClose = function () {
     successWrapper.style.display = 'none';
-    document.removeEventListener('keydown', popupFormEscHandler);
+    document.removeEventListener('keydown', function (evt) {
+      window.openClose.isEscEvent(evt, successFormClose);
+    });
   };
 
   var errorFormClose = function () {
     errorWrapper.style.display = 'none';
-    document.removeEventListener('keydown', popupFormEscHandler);
+    document.removeEventListener('keydown', function (evt) {
+      window.openClose.isEscEvent(evt, errorFormClose);
+    });
   };
 
   // click на кнопку

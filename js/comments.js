@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var INDEX_HIDDEN_COMMENTS = 5;
+
   var bigPictureItem = document.querySelector('.big-picture');
 
   // функция подставления комментариев в выбранную фотографию
@@ -17,11 +19,7 @@
       commentsItem.querySelector('.social__text').textContent = arrayComments[i].message;
       commentsItem.querySelector('.social__picture').alt = 'Аватар ' + arrayComments[i].name;
 
-      bigPictureSocial.querySelector('.social__header .social__picture').src = arrayComments[i].avatar;
-      bigPictureSocial.querySelector('.social__header .social__picture').alt = 'Аватар ' + arrayComments[i].name;
-
       commentsList.appendChild(commentsItem);
-
       currentComments.push(commentsItem);
     }
   };
@@ -39,7 +37,7 @@
   // функция скрытия комментариев, если их больше 5
   var hideComments = function () {
 
-    for (var i = 5; i < currentComments.length; i++) {
+    for (var i = INDEX_HIDDEN_COMMENTS; i < currentComments.length; i++) {
       var hiddenComment = currentComments[i];
       hiddenComment.style.display = 'none';
     }
