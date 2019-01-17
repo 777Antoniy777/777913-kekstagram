@@ -58,13 +58,13 @@
         button.classList.add('hidden');
         currentValue.textContent = currentComments.length;
       }
-      
+
       for (var i = start; i < window.comments.currentCount; i++) {
         var visibleComment = currentComments[i];
         visibleComment.style.display = 'flex';
       }
     });
-  }
+  };
 
   showCommentsNew();
 

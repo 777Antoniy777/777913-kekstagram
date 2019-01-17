@@ -11,7 +11,7 @@
 
     var matches = FILE_TYPES.some(function (it) {
       return fileName.endsWith(it);
-    })
+    });
 
     if (matches) {
       var reader = new FileReader();
