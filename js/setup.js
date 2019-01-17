@@ -93,6 +93,7 @@
   // ESC
   var successFormClose = function () {
     successWrapper.style.display = 'none';
+    window.preview.body.classList.remove('modal-open');
     document.removeEventListener('keydown', function (evt) {
       window.openClose.isEscEvent(evt, successFormClose);
     });
