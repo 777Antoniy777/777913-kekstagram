@@ -7,18 +7,18 @@
   var pictureTemplateContent = templatePicture.content.querySelector('.picture');
 
   var setImages = function (arrayImages) {
-    for (var i = 0; i < arrayImages.length; i++) {
+    arrayImages.forEach(function (images) {
       var templateItem = pictureTemplateContent.cloneNode(true);
 
-      templateItem.querySelector('.picture__img').src = arrayImages[i].url;
-      templateItem.querySelector('.picture__likes').textContent = arrayImages[i].likes;
-      templateItem.querySelector('.picture__comments').textContent = arrayImages[i].comments.length;
+      templateItem.querySelector('.picture__img').src = images.url;
+      templateItem.querySelector('.picture__likes').textContent = images.likes;
+      templateItem.querySelector('.picture__comments').textContent = images.comments.length;
 
-      window.preview.callPictureClick(templateItem, arrayImages[i]);
-      window.preview.callPictureEnter(templateItem, arrayImages[i]);
+      window.preview.callPictureClick(templateItem, images);
+      window.preview.callPictureEnter(templateItem, images);
 
       imageItem.appendChild(templateItem);
-    }
+    });
   };
 
   // глобальный вызов
