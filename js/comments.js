@@ -15,16 +15,16 @@
   var currentValue = bigPictureItem.querySelector('.current-comments-count');
 
   var render = function (arrayComments) {
-    for (var i = 0; i < arrayComments.length; i++) {
+    arrayComments.forEach(function (comments) {
       var commentsItem = commentTemplate.cloneNode(true);
 
-      commentsItem.querySelector('.social__picture').src = arrayComments[i].avatar;
-      commentsItem.querySelector('.social__text').textContent = arrayComments[i].message;
-      commentsItem.querySelector('.social__picture').alt = 'Аватар ' + arrayComments[i].name;
+      commentsItem.querySelector('.social__picture').src = comments.avatar;
+      commentsItem.querySelector('.social__text').textContent = comments.message;
+      commentsItem.querySelector('.social__picture').alt = 'Аватар ' + comments.name;
 
       commentsList.appendChild(commentsItem);
       currentComments.push(commentsItem);
-    }
+    });
   };
 
   // функция удаления предыдущих комментариев
