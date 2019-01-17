@@ -3,7 +3,7 @@
 (function () {
   // функция подставления данных в гл.стр
   var templatePicture = document.querySelector('#picture');
-  var pictureItem = document.querySelector('.pictures');
+  var imageItem = document.querySelector('.pictures');
   var pictureTemplateContent = templatePicture.content.querySelector('.picture');
 
   var setImages = function (arrayImages) {
@@ -17,14 +17,14 @@
       window.preview.callPictureClick(templateItem, arrayImages[i]);
       window.preview.callPictureEnter(templateItem, arrayImages[i]);
 
-      pictureItem.appendChild(templateItem);
+      imageItem.appendChild(templateItem);
     }
   };
 
   // глобальный вызов
   window.pictures = {
     // переменные
-    pictureItem: pictureItem,
+    imageItem: imageItem,
     //  функции
     setImages: setImages
   };

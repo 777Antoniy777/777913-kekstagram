@@ -2,6 +2,7 @@
 
 (function () {
   var INDEX_HIDDEN_COMMENTS = 5;
+  var INDEX_VISIBLE_VALUE = 5;
 
   var bigPictureItem = document.querySelector('.big-picture');
 
@@ -10,8 +11,10 @@
   var bigPictureSocial = bigPictureItem.querySelector('.big-picture__social');
   var commentTemplate = commentsList.querySelector('.social__comment');
   var currentComments = commentsList.querySelectorAll('.social__comment');
+  var button = bigPictureItem.querySelector('.comments-loader');
+  var currentValue = bigPictureItem.querySelector('.current-comments-count');
 
-  var setComments = function (arrayComments) {
+  var render = function (arrayComments) {
     for (var i = 0; i < arrayComments.length; i++) {
       var commentsItem = commentTemplate.cloneNode(true);
 
@@ -25,17 +28,16 @@
   };
 
   // функция удаления предыдущих комментариев
-  var removeComments = function () {
-
-    for (var i = 0; i < currentComments.length; i++) {
-      commentsList.removeChild(currentComments[i]);
-    }
+  var remove = function () {
+    currentComments.forEach(function (comments) {
+      commentsList.removeChild(comments);
+    });
 
     currentComments = [];
   };
 
   // функция скрытия комментариев, если их больше 5
-  var hideComments = function () {
+  var hide = function () {
 
     for (var i = INDEX_HIDDEN_COMMENTS; i < currentComments.length; i++) {
       var hiddenComment = currentComments[i];
@@ -43,14 +45,41 @@
     }
   };
 
+  // функция открытия новых комментариев
+  var showCommentsNew = function () {
+    button.addEventListener('click', function () {
+      var start = window.comments.currentCount;
+
+      if (window.comments.currentCount + INDEX_VISIBLE_VALUE < currentComments.length) {
+        window.comments.currentCount += INDEX_VISIBLE_VALUE;
+        currentValue.textContent = window.comments.currentCount;
+      } else {
+        window.comments.currentCount = currentComments.length;
+        button.classList.add('hidden');
+        currentValue.textContent = currentComments.length;
+      }
+      
+      for (var i = start; i < window.comments.currentCount; i++) {
+        var visibleComment = currentComments[i];
+        visibleComment.style.display = 'flex';
+      }
+    });
+  }
+
+  showCommentsNew();
+
   // глобальный вызов
   window.comments = {
     // переменные
     bigPictureItem: bigPictureItem,
     bigPictureSocial: bigPictureSocial,
+    INDEX_VISIBLE_VALUE: INDEX_VISIBLE_VALUE,
+    button: button,
+    currentValue: currentValue,
+    currentCount: 0,
     // функции
-    setComments: setComments,
-    removeComments: removeComments,
-    hideComments: hideComments
+    render: render,
+    remove: remove,
+    hide: hide,
   };
 })();
