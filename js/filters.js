@@ -28,14 +28,14 @@
   var prewiev = window.setup.uploadForm.querySelector('.img-upload__preview');
 
   var labels = [original, chrome, sepia, marvin, phobos, heat];
-  var labelRadioButton = window.setup.uploadForm.querySelector('.effects__radio');
-  var effectsLevel = window.setup.uploadSetup.querySelector('.img-upload__effect-level');
+  var radioButton = window.setup.uploadForm.querySelector('.effects__radio');
+  var effectsLevel = window.setup.uploadWrapper.querySelector('.img-upload__effect-level');
 
   // подстановка массивов и переменных в функцию создания фильтров
-  var setFilterEffects = function () {
-    for (var i = 0; i < labels.length; i++) {
-      getFilterEffects(labels[i], FILTERS[i], i);
-    }
+  var setEffects = function () {
+    labels.forEach(function (labelsItem, index) {
+      getFilterEffects(labelsItem, FILTERS[index], index);
+    });
   };
 
   // функция движения пина слайдера
@@ -117,11 +117,10 @@
   window.filters = {
     // переменные
     prewiev: prewiev,
-    FILTERS: FILTERS,
-    labelRadioButton: labelRadioButton,
+    radioButton: radioButton,
     effectsLevel: effectsLevel,
     pinValueInput: pinValueInput,
     // функции
-    setFilterEffects: setFilterEffects
+    setEffects: setEffects
   };
 })();

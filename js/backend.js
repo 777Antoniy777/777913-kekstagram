@@ -8,6 +8,11 @@
     SUCCESS: 200
   };
 
+  var TimeoutValue = {
+    FORM_VALUE: 3000,
+    GALLERY_VALUE: 10000
+  };
+
   var sendDataForm = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -28,7 +33,7 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = 3000;
+    xhr.timeout = TimeoutValue.FORM_VALUE;
 
     xhr.open('POST', URL_FORM);
     xhr.send(data);
@@ -56,7 +61,7 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = 10000;
+    xhr.timeout = TimeoutValue.GALLERY_VALUE;
 
     xhr.send();
   };

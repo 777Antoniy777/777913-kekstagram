@@ -11,7 +11,7 @@
   var hashtagCommentInput = window.setup.uploadForm.querySelector('.text__description');
   window.setup.uploadForm.action = 'https://js.dump.academy/kekstagram';
 
-  var validateForm = function () {
+  var checkForm = function () {
     hashtagInput.type = 'text';
     hashtagInput.minLength = HASHTAG_MIN_LENGTH;
     hashtagCommentInput.maxLength = COMMENT_MAX_LENGTH;
@@ -61,6 +61,6 @@
     hashtagInput: hashtagInput,
     hashtagCommentInput: hashtagCommentInput,
     // функции
-    validateForm: validateForm
+    checkForm: checkForm
   };
 })();

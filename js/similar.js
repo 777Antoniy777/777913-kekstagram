@@ -14,7 +14,7 @@
     var dataPictures = document.querySelectorAll('.pictures .picture');
 
     dataPictures.forEach(function (picture) {
-      window.pictures.pictureItem.removeChild(picture);
+      window.pictures.imageItem.removeChild(picture);
     });
   };
 

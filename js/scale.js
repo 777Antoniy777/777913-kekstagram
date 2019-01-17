@@ -10,7 +10,7 @@
   var buttonValue = window.setup.uploadForm.querySelector('.scale__control--value');
   var scaleValues = [25, 50, 75, 100];
 
-  var setScale = function () {
+  var init = function () {
     var scaleValueIndex = DEFAULT_SCALE_INDEX;
     buttonValue.readOnly = false;
     buttonValue.value = 100 + '%';
@@ -54,6 +54,6 @@
   // глобальный вызов
   window.scale = {
     // функции
-    setScale: setScale
+    init: init
   };
 })();

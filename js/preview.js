@@ -1,14 +1,6 @@
 'use strict';
 
 (function () {
-  // функция добавления класса hidden к тем объектам, которые это заслужили
-  var addHiddenClass = function () {
-    document.querySelector('.social__comment-count').classList.add('visually-hidden');
-    document.querySelector('.comments-loader').classList.add('visually-hidden');
-  };
-
-  addHiddenClass();
-
   // открытие полноэкранной картинки с помощью мыши и закрытие с помощью ESC
   var callPictureClick = function (templateItem, image) {
     templateItem.addEventListener('click', function (evt) {
@@ -27,7 +19,6 @@
   // открытие и закрытие большого фото при нажатии на любое фото в галерее
   var bigPictureClose = window.comments.bigPictureItem.querySelector('.big-picture__cancel');
   bigPictureClose.tabIndex = 0;
-  var commentInput = window.comments.bigPictureItem.querySelector('.social__footer-text');
   var body = document.querySelector('body');
 
   var pictureKeydownESCHandler = function (evt) {
@@ -41,12 +32,20 @@
     window.comments.bigPictureItem.querySelector('.comments-count').textContent = image.comments.length;
     window.comments.bigPictureItem.querySelector('.social__caption').textContent = image.description;
 
+    window.comments.currentCount = 5;
+    window.comments.button.classList.remove('hidden');
+    window.comments.currentValue.textContent = 5;
+
     body.classList.add('modal-open');
-    window.comments.removeComments();
-    window.comments.setComments(image.comments);
-    window.comments.hideComments();
-    commentInput.focus();
+    window.comments.remove();
+    window.comments.render(image.comments);
+    window.comments.hide();
     document.addEventListener('keydown', pictureKeydownESCHandler);
+
+    if (image.comments.length < window.comments.INDEX_VISIBLE_VALUE) {
+      window.comments.button.classList.add('hidden');
+      window.comments.currentValue.textContent = image.comments.length;
+    }
   };
 
   var pictureClose = function () {
@@ -68,6 +67,8 @@
 
   // глобальный вызов
   window.preview = {
+    // переменные
+    body: body,
     // функции
     callPictureClick: callPictureClick,
     callPictureEnter: callPictureEnter
