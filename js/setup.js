@@ -60,6 +60,7 @@
   var successFormHandler = function () {
     main.appendChild(successTemplate);
     successWrapper.style.display = 'flex';
+    window.preview.body.classList.remove('modal-open');
     document.addEventListener('keydown', function (evt) {
       window.openClose.isEscEvent(evt, successFormClose);
     });
@@ -93,7 +94,6 @@
   // ESC
   var successFormClose = function () {
     successWrapper.style.display = 'none';
-    window.preview.body.classList.remove('modal-open');
     document.removeEventListener('keydown', function (evt) {
       window.openClose.isEscEvent(evt, successFormClose);
     });
