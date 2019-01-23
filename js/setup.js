@@ -44,6 +44,7 @@
     uploadWrapper.classList.add('hidden');
     window.preview.body.classList.remove('modal-open');
     uploadFile.value = '';
+    window.validity.hashtagInput.value = '';
     document.removeEventListener('keydown', fileKeydownESCHandler);
   };
 
